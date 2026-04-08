@@ -1,5 +1,7 @@
 export interface Profile {
   name: string
+  firstName: string
+  lastName: string
   title: string
   subtitle: string
   description: string
@@ -8,8 +10,6 @@ export interface Profile {
   phone: string
   github: string
   githubUrl: string
-  linkedin?: string
-  avatar?: string
 }
 
 export interface SkillCategory {
@@ -20,18 +20,18 @@ export interface SkillCategory {
 export interface Project {
   id: string
   title: string
-  problem: string
+  description: string
   role: string
-  solution: string
   tech: string[]
-  impact: string
+  highlights: string[]
   githubUrl: string
-  limitations: string
-  featured: boolean
+  category: 'mobile' | 'web' | 'ai' | 'other'
+  hasGithubRepo: boolean
 }
 
 export interface Experience {
   company: string
+  client?: string
   role: string
   period: string
   location: string
@@ -43,7 +43,6 @@ export interface Education {
   school: string
   degree: string
   period: string
-  description?: string
 }
 
 export interface PortfolioData {

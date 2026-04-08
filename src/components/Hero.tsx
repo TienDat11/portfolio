@@ -10,10 +10,10 @@ export default function Hero() {
           Hi, my name is
         </p>
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-slate-300 mb-1 leading-tight">
-          {profile.name.split(' ').slice(0, -1).join(' ')}
+          Tien Dat
         </h1>
         <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold text-slate-400 mb-5 leading-tight">
-          {profile.name.split(' ').slice(-1)}.
+          Ngo.
         </h2>
         <p className="text-base md:text-lg text-slate-400 max-w-xl mb-7 leading-relaxed">
           {profile.description}
