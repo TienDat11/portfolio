@@ -4,37 +4,37 @@ export default function Contact() {
   const { profile } = portfolioData
 
   return (
-    <section id="contact" className="px-6 py-20 max-w-4xl mx-auto text-center">
-      <h2 className="text-2xl md:text-3xl font-bold text-slate-300 mb-4 flex items-center justify-center gap-3">
-        <span className="text-accent font-mono text-lg">06.</span>
+    <section id="contact" className="px-6 py-16 max-w-4xl mx-auto text-center">
+      <h2 className="section-heading justify-center">
+        <span className="section-number">06.</span>
         Get In Touch
       </h2>
-      <p className="text-slate-400 max-w-lg mx-auto mb-8 leading-relaxed">
+      <p className="text-slate-400 max-w-md mx-auto mb-6 leading-relaxed text-sm">
         I'm currently open to new opportunities. Whether you have a question or
         just want to say hi, feel free to reach out!
       </p>
-      <div className="flex flex-wrap items-center justify-center gap-4">
+      <div className="flex flex-wrap items-center justify-center gap-3">
         <a
           href={`mailto:${profile.email}`}
-          className="inline-block border border-accent text-accent font-mono text-sm px-8 py-3 rounded hover:bg-accent/10 transition-colors"
+          className="inline-block border border-accent text-accent font-mono text-sm px-7 py-2.5 rounded hover:bg-accent/10 transition-colors"
         >
           Say Hello
         </a>
         <a
           href="/portfolio/cv.pdf"
           download
-          className="inline-block border border-slate-400/30 text-slate-400 font-mono text-sm px-8 py-3 rounded hover:border-accent hover:text-accent transition-colors"
+          className="inline-block border border-slate-400/30 text-slate-400 font-mono text-sm px-7 py-2.5 rounded hover:border-accent hover:text-accent transition-colors"
         >
           Download CV
         </a>
       </div>
 
-      <div className="flex items-center justify-center gap-6 mt-10">
+      <div className="flex items-center justify-center gap-5 mt-8">
         <a
           href={profile.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-slate-400 hover:text-accent transition-colors"
+          className="text-slate-500 hover:text-accent transition-colors"
           aria-label="GitHub"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -43,7 +43,7 @@ export default function Contact() {
         </a>
         <a
           href={`mailto:${profile.email}`}
-          className="text-slate-400 hover:text-accent transition-colors"
+          className="text-slate-500 hover:text-accent transition-colors"
           aria-label="Email"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

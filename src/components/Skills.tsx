@@ -4,28 +4,27 @@ export default function Skills() {
   const { skills } = portfolioData
 
   return (
-    <section className="px-6 py-20 max-w-4xl mx-auto">
-      <h2 className="text-2xl md:text-3xl font-bold text-slate-300 mb-10 flex items-center gap-3">
-        <span className="text-accent font-mono text-lg">02.</span>
+    <section className="px-6 py-16 max-w-4xl mx-auto">
+      <h2 className="section-heading">
+        <span className="section-number">02.</span>
         Skills & Technologies
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="space-y-5">
         {skills.map((group) => (
-          <div key={group.category} className="bg-navy-800 rounded-lg p-5">
-            <h3 className="text-accent font-mono text-sm mb-3">
+          <div key={group.category}>
+            <h3 className="text-accent font-mono text-xs mb-2 uppercase tracking-wider">
               {group.category}
             </h3>
-            <ul className="space-y-1.5">
+            <div className="flex flex-wrap gap-2">
               {group.items.map((item) => (
-                <li
+                <span
                   key={item}
-                  className="text-slate-400 text-sm flex items-center gap-2"
+                  className="text-xs font-mono text-slate-300 bg-navy-900/60 border border-navy-600/40 px-2.5 py-1 rounded hover:border-accent/40 hover:text-accent transition-colors"
                 >
-                  <span className="text-accent text-xs">&#9654;</span>
                   {item}
-                </li>
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
         ))}
       </div>

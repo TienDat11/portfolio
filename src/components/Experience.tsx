@@ -4,39 +4,36 @@ export default function Experience() {
   const { experience } = portfolioData
 
   return (
-    <section className="px-6 py-20 max-w-4xl mx-auto">
-      <h2 className="text-2xl md:text-3xl font-bold text-slate-300 mb-10 flex items-center gap-3">
-        <span className="text-accent font-mono text-lg">04.</span>
+    <section className="px-6 py-16 max-w-4xl mx-auto">
+      <h2 className="section-heading">
+        <span className="section-number">04.</span>
         Experience
       </h2>
-      <div className="space-y-8">
+      <div className="space-y-6">
         {experience.map((exp, i) => (
           <div
             key={i}
-            className="relative pl-6 border-l-2 border-accent/30"
+            className="relative pl-5 border-l-2 border-accent/30"
           >
             <div className="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-accent" />
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-              <h3 className="text-lg font-bold text-accent">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-1">
+              <h3 className="text-base font-bold text-accent">
                 {exp.role}
               </h3>
-              <span className="text-slate-400 font-mono text-sm">
+              <span className="text-slate-500 font-mono text-xs">
                 {exp.period}
               </span>
             </div>
-            <p className="text-slate-300 text-sm mb-1">
+            <p className="text-slate-400 text-sm mb-2">
               {exp.company} &middot; {exp.location}
             </p>
-            <p className="text-slate-400 text-sm mb-3">
-              {exp.description}
-            </p>
-            <ul className="space-y-1.5">
+            <ul className="space-y-1">
               {exp.highlights.map((h, j) => (
                 <li
                   key={j}
                   className="text-slate-400 text-sm flex items-start gap-2"
                 >
-                  <span className="text-accent text-xs mt-1">&#9654;</span>
+                  <span className="text-accent text-xs mt-0.5">&#9654;</span>
                   {h}
                 </li>
               ))}

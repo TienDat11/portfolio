@@ -15,10 +15,14 @@ function App() {
       <main className="pt-14">
         <Hero />
         <About />
-        <Skills />
+        <div className="section-alt">
+          <Skills />
+        </div>
         <Projects />
-        <Experience />
-        <Education />
+        <div className="section-alt">
+          <Experience />
+          <Education />
+        </div>
         <Contact />
       </main>
       <Footer />
