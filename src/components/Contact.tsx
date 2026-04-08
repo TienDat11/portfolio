@@ -13,12 +13,21 @@ export default function Contact() {
         I'm currently open to new opportunities. Whether you have a question or
         just want to say hi, feel free to reach out!
       </p>
-      <a
-        href={`mailto:${profile.email}`}
-        className="inline-block border border-accent text-accent font-mono text-sm px-8 py-3 rounded hover:bg-accent/10 transition-colors"
-      >
-        Say Hello
-      </a>
+      <div className="flex flex-wrap items-center justify-center gap-4">
+        <a
+          href={`mailto:${profile.email}`}
+          className="inline-block border border-accent text-accent font-mono text-sm px-8 py-3 rounded hover:bg-accent/10 transition-colors"
+        >
+          Say Hello
+        </a>
+        <a
+          href="/portfolio/cv.pdf"
+          download
+          className="inline-block border border-slate-400/30 text-slate-400 font-mono text-sm px-8 py-3 rounded hover:border-accent hover:text-accent transition-colors"
+        >
+          Download CV
+        </a>
+      </div>
 
       <div className="flex items-center justify-center gap-6 mt-10">
         <a
