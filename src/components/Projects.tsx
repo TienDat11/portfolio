@@ -28,10 +28,10 @@ export default function Projects() {
           <button
             key={f.value}
             onClick={() => setFilter(f.value)}
-            className={`font-mono text-xs px-3 py-1.5 rounded border transition-colors ${
+            className={`font-mono text-xs px-3 py-1.5 rounded-lg border transition-colors ${
               filter === f.value
-                ? 'border-accent text-accent bg-accent/10'
-                : 'border-navy-600/40 text-slate-500 hover:text-accent hover:border-accent/40'
+                ? 'border-primary text-primary bg-primary/5'
+                : 'border-slate-200 text-slate-400 hover:text-primary hover:border-primary/40'
             }`}
           >
             {f.label}

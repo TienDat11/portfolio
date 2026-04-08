@@ -13,18 +13,18 @@ export default function Education() {
         {education.map((edu, i) => (
           <div
             key={i}
-            className="relative pl-5 border-l-2 border-accent/30"
+            className="relative pl-5 border-l-2 border-primary/30"
           >
-            <div className="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-accent" />
+            <div className="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-primary" />
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-0.5">
-              <h3 className="text-base font-bold text-slate-300">
+              <h3 className="text-base font-bold text-slate-800">
                 {edu.degree}
               </h3>
-              <span className="text-slate-500 font-mono text-xs">
+              <span className="text-slate-400 font-mono text-xs">
                 {edu.period}
               </span>
             </div>
-            <p className="text-accent text-sm">{edu.school}</p>
+            <p className="text-primary text-sm">{edu.school}</p>
           </div>
         ))}
       </div>

@@ -9,16 +9,16 @@ export default function About() {
         <span className="section-number">01.</span>
         About Me
       </h2>
-      <div className="space-y-3 text-slate-400 leading-relaxed max-w-2xl">
+      <div className="space-y-3 text-slate-600 leading-relaxed max-w-2xl">
         <p>
-          I'm a <span className="text-accent">Mobile & Full-stack Developer</span> based in{' '}
+          I'm a <span className="text-primary font-semibold">Mobile & Full-stack Developer</span> based in{' '}
           {profile.location}, with professional experience shipping production applications
           across Flutter, React/Next.js, and Python/AI.
         </p>
         <p>
           My core strength is building scalable, maintainable applications using{' '}
-          <span className="text-accent">Clean Architecture</span>,{' '}
-          <span className="text-accent">BLoC pattern</span>, and modern development practices.
+          <span className="text-primary font-semibold">Clean Architecture</span>,{' '}
+          <span className="text-primary font-semibold">BLoC pattern</span>, and modern development practices.
           I've shipped apps across healthcare, ride-hailing, e-commerce, social platforms, and AI domains.
         </p>
         <p>
