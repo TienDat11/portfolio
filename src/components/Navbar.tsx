@@ -2,9 +2,12 @@ import { useState, useEffect, useCallback } from 'react'
 import { portfolioData } from '../data/portfolio'
 
 const links = [
+  { label: 'Home', href: '#hero' },
   { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Education', href: '#education' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -41,6 +44,10 @@ export default function Navbar() {
   const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
     setOpen(false)
+    if (href === '#hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
     const el = document.getElementById(href.slice(1))
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - 64
@@ -56,7 +63,7 @@ export default function Navbar() {
           : 'bg-white/80 backdrop-blur-sm'
       }`}
     >
-      <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
         <a
           href="#"
           onClick={(e) => {
@@ -73,7 +80,7 @@ export default function Navbar() {
           </span>
         </a>
 
-        <div className="hidden sm:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-0.5">
           {links.map((link, i) => {
             const id = link.href.slice(1)
             const isActive = active === id
@@ -82,7 +89,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleClick(e, link.href)}
-                className={`relative px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
+                className={`relative px-2.5 py-1.5 text-[13px] font-medium rounded-md transition-all duration-200 ${
                   isActive
                     ? 'text-primary bg-primary/5'
                     : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
@@ -93,7 +100,7 @@ export default function Navbar() {
                 </span>
                 {link.label}
                 {isActive && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-primary rounded-full" />
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-primary rounded-full" />
                 )}
               </a>
             )
@@ -101,14 +108,14 @@ export default function Navbar() {
           <a
             href="/portfolio/cv.pdf"
             download
-            className="ml-2 text-primary font-mono text-xs border border-primary/25 px-3.5 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-all duration-200"
+            className="ml-1.5 text-primary font-mono text-xs border border-primary/25 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-all duration-200"
           >
             Resume
           </a>
         </div>
 
         <button
-          className="sm:hidden text-slate-500 hover:text-primary transition-colors p-1"
+          className="lg:hidden text-slate-500 hover:text-primary transition-colors p-1"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -125,8 +132,8 @@ export default function Navbar() {
       </div>
 
       <div
-        className={`sm:hidden overflow-hidden transition-all duration-300 ${
-          open ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0'
+        className={`lg:hidden overflow-hidden transition-all duration-300 ${
+          open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         } bg-white/95 backdrop-blur-md border-b border-slate-100`}
       >
         <div className="px-6 py-3 space-y-0.5">

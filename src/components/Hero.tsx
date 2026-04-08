@@ -4,8 +4,8 @@ export default function Hero() {
   const { profile } = portfolioData
 
   return (
-    <section className="flex items-center justify-center min-h-[85vh] px-6">
-      <div className="max-w-5xl w-full flex flex-col md:flex-row items-center gap-10 animate-fade-in">
+    <section id="hero" className="flex items-center justify-center min-h-[85vh] px-6">
+      <div className="max-w-4xl w-full flex flex-col md:flex-row items-center gap-10 animate-fade-in">
         <div className="flex-1">
           <p className="text-primary font-mono text-sm mb-4">
             Hi, my name is

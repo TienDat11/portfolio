@@ -6,7 +6,7 @@ export default function Experience() {
   return (
     <section id="experience" className="px-6 py-16 max-w-4xl mx-auto">
       <h2 className="section-heading">
-        <span className="section-number">04.</span>
+        <span className="section-number">05.</span>
         Experience
       </h2>
       <div className="space-y-6">

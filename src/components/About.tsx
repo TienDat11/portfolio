@@ -6,7 +6,7 @@ export default function About() {
   return (
     <section id="about" className="px-6 py-16 max-w-4xl mx-auto">
       <h2 className="section-heading">
-        <span className="section-number">01.</span>
+        <span className="section-number">02.</span>
         About Me
       </h2>
       <div className="space-y-3 text-slate-600 leading-relaxed max-w-2xl">

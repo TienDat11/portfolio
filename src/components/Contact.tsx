@@ -6,7 +6,7 @@ export default function Contact() {
   return (
     <section id="contact" className="px-6 py-16 max-w-4xl mx-auto text-center">
       <h2 className="section-heading justify-center">
-        <span className="section-number">05.</span>
+        <span className="section-number">07.</span>
         Get In Touch
       </h2>
       <p className="text-slate-500 max-w-md mx-auto mb-6 leading-relaxed text-sm">
