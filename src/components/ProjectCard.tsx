@@ -6,10 +6,10 @@ interface ProjectCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  mobile: 'text-blue-400 bg-blue-400/10 border-blue-400/20',
-  web: 'text-green-400 bg-green-400/10 border-green-400/20',
-  ai: 'text-purple-400 bg-purple-400/10 border-purple-400/20',
-  other: 'text-orange-400 bg-orange-400/10 border-orange-400/20',
+  mobile: 'text-blue-600 bg-blue-50 border-blue-200',
+  web: 'text-emerald-600 bg-emerald-50 border-emerald-200',
+  ai: 'text-purple-600 bg-purple-50 border-purple-200',
+  other: 'text-orange-600 bg-orange-50 border-orange-200',
 }
 
 const categoryLabels: Record<string, string> = {
@@ -23,18 +23,18 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
   const catColor = categoryColors[project.category] || categoryColors.other
 
   return (
-    <div className="bg-navy-800 rounded-lg p-5 hover:translate-y-[-3px] transition-all duration-300 border border-navy-700/50 hover:border-accent/20 group">
+    <div className="bg-white rounded-xl p-5 hover:translate-y-[-3px] transition-all duration-300 border border-slate-200 hover:border-primary/30 shadow-sm hover:shadow-md group">
       <div className="flex items-start justify-between mb-3">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${catColor}`}>
               {categoryLabels[project.category]}
             </span>
-            <span className="text-accent/40 font-mono text-xs">
+            <span className="text-slate-300 font-mono text-xs">
               {String(index + 1).padStart(2, '0')}
             </span>
           </div>
-          <h3 className="text-lg font-bold text-slate-300 group-hover:text-accent transition-colors">
+          <h3 className="text-lg font-bold text-slate-800 group-hover:text-primary transition-colors">
             {project.title}
           </h3>
         </div>
@@ -43,7 +43,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-500 hover:text-accent transition-colors"
+            className="text-slate-400 hover:text-slate-700 transition-colors"
             aria-label={`GitHub repository for ${project.title}`}
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -53,15 +53,15 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         )}
       </div>
 
-      <p className="text-slate-400 text-sm leading-relaxed mb-3">
+      <p className="text-slate-500 text-sm leading-relaxed mb-3">
         {project.description}
       </p>
 
       {project.highlights.length > 0 && (
         <ul className="space-y-1 mb-3">
           {project.highlights.slice(0, 3).map((h, i) => (
-            <li key={i} className="text-slate-400 text-xs flex items-start gap-1.5">
-              <span className="text-accent text-[10px] mt-0.5">&#9654;</span>
+            <li key={i} className="text-slate-500 text-xs flex items-start gap-1.5">
+              <span className="text-primary text-[10px] mt-0.5">&#9654;</span>
               {h}
             </li>
           ))}
@@ -72,7 +72,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         {project.tech.slice(0, 8).map((t) => (
           <span
             key={t}
-            className="text-[10px] font-mono text-accent/70 bg-accent/5 px-1.5 py-0.5 rounded"
+            className="text-[10px] font-mono text-primary/70 bg-primary/5 px-1.5 py-0.5 rounded"
           >
             {t}
           </span>

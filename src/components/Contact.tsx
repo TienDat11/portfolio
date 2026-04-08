@@ -9,21 +9,21 @@ export default function Contact() {
         <span className="section-number">05.</span>
         Get In Touch
       </h2>
-      <p className="text-slate-400 max-w-md mx-auto mb-6 leading-relaxed text-sm">
+      <p className="text-slate-500 max-w-md mx-auto mb-6 leading-relaxed text-sm">
         I'm currently open to new opportunities. Whether you have a question or
         just want to say hi, feel free to reach out!
       </p>
       <div className="flex flex-wrap items-center justify-center gap-3">
         <a
           href={`mailto:${profile.email}`}
-          className="inline-block border border-accent text-accent font-mono text-sm px-7 py-2.5 rounded hover:bg-accent/10 transition-colors"
+          className="inline-block bg-primary text-white font-mono text-sm px-7 py-2.5 rounded-lg hover:bg-primary-dark transition-colors"
         >
           Say Hello
         </a>
         <a
           href="/portfolio/cv.pdf"
           download
-          className="inline-block border border-slate-400/30 text-slate-400 font-mono text-sm px-7 py-2.5 rounded hover:border-accent hover:text-accent transition-colors"
+          className="inline-block border border-slate-300 text-slate-600 font-mono text-sm px-7 py-2.5 rounded-lg hover:border-primary hover:text-primary transition-colors"
         >
           Download CV
         </a>
@@ -34,7 +34,7 @@ export default function Contact() {
           href={profile.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-slate-500 hover:text-accent transition-colors"
+          className="text-slate-400 hover:text-slate-700 transition-colors"
           aria-label="GitHub"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -43,7 +43,7 @@ export default function Contact() {
         </a>
         <a
           href={`mailto:${profile.email}`}
-          className="text-slate-500 hover:text-accent transition-colors"
+          className="text-slate-400 hover:text-slate-700 transition-colors"
           aria-label="Email"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

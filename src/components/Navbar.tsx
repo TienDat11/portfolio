@@ -13,11 +13,11 @@ export default function Navbar() {
   ]
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-navy-900/90 backdrop-blur-sm border-b border-navy-700/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200/80">
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
         <a
           href="#"
-          className="text-accent font-mono text-sm font-bold hover:text-accent-dark transition-colors"
+          className="text-primary font-mono text-sm font-bold hover:text-primary-dark transition-colors"
         >
           {profile.github}
         </a>
@@ -28,9 +28,9 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-slate-400 text-sm hover:text-accent transition-colors"
+              className="text-slate-500 text-sm hover:text-primary transition-colors"
             >
-              <span className="text-accent font-mono text-xs mr-1">
+              <span className="text-primary font-mono text-xs mr-1">
                 {String(i + 1).padStart(2, '0')}.
               </span>
               {link.label}
@@ -39,7 +39,7 @@ export default function Navbar() {
           <a
             href="/portfolio/cv.pdf"
             download
-            className="text-accent font-mono text-sm border border-accent/40 px-3 py-1 rounded hover:bg-accent/10 transition-colors"
+            className="text-primary font-mono text-xs border border-primary/30 px-3 py-1 rounded-lg hover:bg-primary/5 transition-colors"
           >
             Resume
           </a>
@@ -47,7 +47,7 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="sm:hidden text-slate-400 hover:text-accent transition-colors"
+          className="sm:hidden text-slate-400 hover:text-primary transition-colors"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -65,15 +65,15 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="sm:hidden bg-navy-800 border-b border-navy-700/50 px-6 pb-4">
+        <div className="sm:hidden bg-white border-b border-slate-200 px-6 pb-4">
           {links.map((link, i) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="block py-2 text-slate-400 text-sm hover:text-accent transition-colors"
+              className="block py-2 text-slate-500 text-sm hover:text-primary transition-colors"
             >
-              <span className="text-accent font-mono text-xs mr-1">
+              <span className="text-primary font-mono text-xs mr-1">
                 {String(i + 1).padStart(2, '0')}.
               </span>
               {link.label}
@@ -82,7 +82,7 @@ export default function Navbar() {
           <a
             href="/portfolio/cv.pdf"
             download
-            className="block py-2 text-accent font-mono text-sm"
+            className="block py-2 text-primary font-mono text-sm"
           >
             Resume
           </a>
