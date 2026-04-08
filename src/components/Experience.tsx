@@ -24,11 +24,15 @@ export default function Experience() {
                 {exp.period}
               </span>
             </div>
-            <p className="text-slate-400 text-sm mb-2">
-              {exp.company} &middot; {exp.location}
+            <p className="text-slate-400 text-sm mb-1">
+              {exp.company}
+              {exp.client && (
+                <span className="text-slate-500"> — {exp.client}</span>
+              )}
             </p>
+            <p className="text-slate-400/70 text-xs mb-2">{exp.description}</p>
             <ul className="space-y-1">
-              {exp.highlights.map((h, j) => (
+              {exp.highlights.slice(0, 4).map((h, j) => (
                 <li
                   key={j}
                   className="text-slate-400 text-sm flex items-start gap-2"

@@ -11,15 +11,19 @@ export default function About() {
       </h2>
       <div className="space-y-3 text-slate-400 leading-relaxed max-w-2xl">
         <p>
-          I'm a <span className="text-accent">Mobile Developer</span> based in{' '}
-          {profile.location}, specializing in building exceptional digital
-          experiences with Flutter.
+          I'm a <span className="text-accent">Mobile & Full-stack Developer</span> based in{' '}
+          {profile.location}, with professional experience shipping production applications
+          across Flutter, React/Next.js, and Python/AI.
         </p>
         <p>
-          My focus is on building scalable, maintainable applications using{' '}
+          My core strength is building scalable, maintainable applications using{' '}
           <span className="text-accent">Clean Architecture</span>,{' '}
-          <span className="text-accent">BLoC pattern</span>, and modern
-          development practices.
+          <span className="text-accent">BLoC pattern</span>, and modern development practices.
+          I've shipped apps across healthcare, ride-hailing, e-commerce, social platforms, and AI domains.
+        </p>
+        <p>
+          Beyond mobile, I've built full-stack web platforms with Next.js 15 and AI systems including
+          RAG chatbots, computer vision pipelines, and recommendation engines.
         </p>
       </div>
     </section>

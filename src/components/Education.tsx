@@ -6,7 +6,7 @@ export default function Education() {
   return (
     <section className="px-6 max-w-4xl mx-auto pb-16">
       <h2 className="section-heading">
-        <span className="section-number">05.</span>
+        <span className="section-number">06.</span>
         Education
       </h2>
       <div className="space-y-4">
