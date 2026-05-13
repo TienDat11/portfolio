@@ -325,7 +325,7 @@ export const portfolioData: PortfolioData = {
     {
       company: 'Hivefive+',
       role: 'Mobile Developer',
-      period: 'Jan 2025 — Present',
+      period: 'Sep 2024 — Present',
       location: 'Remote',
       description:
         'Architected and shipped cross-platform Flutter applications following Clean Architecture with BLoC state management, ensuring scalable and maintainable codebases.',
