@@ -81,6 +81,59 @@ export const portfolioData: PortfolioData = {
 
   projects: [
     {
+      id: 'crosstechedu-website',
+      title: 'Crosstechedu — Company Website (VI / EN)',
+      description:
+        'Bilingual (Vietnamese / English) IT-outsourcing marketing site built with Flask + Jinja2, server-rendered with no client JavaScript and tuned for Google SEO. Exported statically and deployed on Vercel, with a blog written through a local Django admin CMS.',
+      role: 'Web Developer — Crosstechedu',
+      tech: ['Python', 'Flask', 'Jinja2', 'Django admin', 'SEO', 'Vercel', 'pytest'],
+      highlights: [
+        'Bilingual routes (/ and /en/) with blog, sitemap and robots',
+        'Static export on Vercel, no server or database to host',
+        'Live at crosstechedu.com',
+      ],
+      githubUrl: 'https://github.com/Cross-Players/cross-web-com',
+      liveUrl: 'https://www.crosstechedu.com/',
+      liveLabel: 'Live site',
+      category: 'web',
+      hasGithubRepo: true,
+    },
+    {
+      id: 'ngoc-hoang-website',
+      title: 'Ngọc Hoàng — Accounting & Business Advisory Site',
+      description:
+        'Marketing site for a Da Nang tax-accounting and company-formation firm: Next.js App Router + TypeScript, statically exported and deployed on Vercel with SEO metadata.',
+      role: 'Web Developer — Crosstechedu',
+      tech: ['Next.js', 'TypeScript', 'Static export', 'SEO', 'Vercel'],
+      highlights: [
+        'Section-based component structure with static content data',
+        'Static export deployed on Vercel, live on the client domain',
+      ],
+      githubUrl: 'https://github.com/Cross-Players/ketoanngochoang',
+      liveUrl: 'https://ketoanngochoang.com.vn/',
+      liveLabel: 'Live site',
+      category: 'web',
+      hasGithubRepo: true,
+    },
+    {
+      id: 'room-rental-web',
+      title: 'Room Rental Management System',
+      description:
+        'Full-stack web app for managing rental rooms: React 18 + Ant Design front end deployed on Vercel, Django REST Framework API (JWT auth, OpenAPI docs) on PostgreSQL deployed on Render.',
+      role: 'Full-stack Developer',
+      tech: ['React', 'Ant Design', 'Zustand', 'TanStack Query', 'Django REST', 'PostgreSQL', 'JWT'],
+      highlights: [
+        'React Router 7 + TanStack Query client',
+        'DRF API with JWT auth and generated API docs',
+        'Front end on Vercel, API on Render',
+      ],
+      githubUrl: 'https://github.com/TienDat11/room-rental-management-system',
+      liveUrl: 'https://room-rental-management-system-front.vercel.app',
+      liveLabel: 'Live demo',
+      category: 'web',
+      hasGithubRepo: true,
+    },
+    {
       id: 'fintech-th',
       title: 'Fintech Mobile App (Thailand market)',
       description:
