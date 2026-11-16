@@ -137,10 +137,15 @@ export const portfolioData: PortfolioData = {
       id: 'fintech-th',
       title: 'Fintech Mobile App (Thailand market)',
       description:
-        'Flutter fintech mobile app for the Thai market. I built the user-interface layer from the team designs; the project was later handed over by the team lead.',
+        'Flutter fintech mobile app for the Thai market. I built the user-interface layer from the team designs; the project was later handed over by the team lead. The client specified the toolchain below.',
       role: 'Flutter Developer (UI) — Crosstechedu',
-      tech: ['Flutter', 'Dart', 'UI implementation'],
-      highlights: ['UI layer implemented from design', 'Project later handed over by the team lead'],
+      tech: ['Flutter 3.41.1', 'Dart', 'Riverpod 3.2.1', 'go_router', 'Freezed', 'Flutter Web', 'Phrase', 'Patrol', 'Melos', 'Node.js', 'Jira', 'Mixpanel'],
+      highlights: [
+        'UI layer implemented from design',
+        'Client-specified stack: Riverpod state management, go_router navigation, Freezed models',
+        'Localization with Phrase, E2E testing with Patrol, Melos monorepo, Mixpanel analytics',
+        'Project later handed over by the team lead',
+      ],
       githubUrl: '',
       category: 'mobile',
       hasGithubRepo: false,
