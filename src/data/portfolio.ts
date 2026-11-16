@@ -81,11 +81,46 @@ export const portfolioData: PortfolioData = {
 
   projects: [
     {
+      id: 'fintech-th',
+      title: 'Fintech Mobile App (Thailand market)',
+      description:
+        'Flutter fintech mobile app for the Thai market. I built the user-interface layer from the team designs; the project was later handed over by the team lead.',
+      role: 'Flutter Developer (UI) — Crosstechedu',
+      tech: ['Flutter', 'Dart', 'UI implementation'],
+      highlights: ['UI layer implemented from design', 'Project later handed over by the team lead'],
+      githubUrl: '',
+      category: 'mobile',
+      hasGithubRepo: false,
+    },
+    {
+      id: 'trong-cay',
+      title: 'Trồng Cây — Virtual Tree Growing',
+      description:
+        'Flutter app where users grow a virtual tree and contribute to a real tree-planting fund. Currently in store submission.',
+      role: 'Flutter Developer — Crosstechedu',
+      tech: ['Flutter', 'Dart', 'Firebase', 'AdMob'],
+      highlights: ['Currently in store submission'],
+      githubUrl: '',
+      category: 'mobile',
+      hasGithubRepo: false,
+    },
+    {
+      id: 'kigo',
+      title: 'Kigo',
+      description: 'Flutter mobile app, currently in store submission.',
+      role: 'Flutter Developer — Crosstechedu',
+      tech: ['Flutter', 'Dart'],
+      highlights: ['Currently in store submission'],
+      githubUrl: '',
+      category: 'mobile',
+      hasGithubRepo: false,
+    },
+    {
       id: 'face-find',
       title: 'FaceFind — Event Photo Search by Face',
       description:
         'Event organisers paste a Google Drive folder link; the system scans and indexes faces, and guests scan a QR, take a selfie and instantly see the photos they appear in. Photos and selfies are never stored: only read into memory to compute embeddings.',
-      role: 'Developer — Team member at Cross Players',
+      role: 'Developer — Crosstechedu',
       tech: ['Python', 'FastAPI', 'YuNet', 'AuraFace', 'Google Drive API', 'Docker', 'Caddy'],
       highlights: [
         'YuNet face detection + AuraFace 512-d embeddings (commercial-friendly licences)',
@@ -101,7 +136,7 @@ export const portfolioData: PortfolioData = {
       title: 'Ôn thi GPLX — 600 câu',
       description:
         'Driving-licence (A1/B1) theory exam prep app published on Google Play and the App Store, built with dev / staging / production flavors, localisation and AdMob.',
-      role: 'Flutter Developer — Team member at Cross Edu Tech',
+      role: 'Flutter Developer — Crosstechedu',
       tech: ['Flutter', 'Dart', 'Firebase', 'AdMob', 'Flavors', 'integration_test'],
       highlights: [
         'Released on Google Play and the App Store',
@@ -119,7 +154,7 @@ export const portfolioData: PortfolioData = {
       title: 'FamHub — Safe Zone Alerts',
       description:
         'Parent / child app: parents set safe zones, get arrival alerts and see their child check-ins. Firebase / Firestore backend with location and push notifications.',
-      role: 'Flutter Developer — Team member at Cross Edu Tech',
+      role: 'Flutter Developer — Crosstechedu',
       tech: ['Flutter', 'Dart', 'Firebase', 'Firestore', 'FCM', 'Geolocation'],
       highlights: [
         'Released on the App Store (Nov 2026)',
@@ -137,7 +172,7 @@ export const portfolioData: PortfolioData = {
       title: 'DNQAT — Apartment CRM',
       description:
         'Internal operations CRM for apartment rentals in Da Nang: room-map dashboard, property list, tenant CRM (Kanban + list), role-based access and two-way Google Sheets sync.',
-      role: 'Flutter / Full-stack Developer',
+      role: 'Flutter / Full-stack Developer — Crosstechedu',
       tech: ['Flutter', 'Riverpod', 'go_router', 'Dio', 'FastAPI', 'PostgreSQL', 'Google Sheets API', 'Nginx'],
       highlights: [
         'Room map by building / floor / status',
@@ -186,7 +221,7 @@ export const portfolioData: PortfolioData = {
       title: 'Twake Mail on a VPS',
       description:
         'Deployed and operate Twake Mail (Linagora mail platform) on a VPS behind HTTPS: containers, domain and TLS setup, mail-service configuration.',
-      role: 'DevOps / Deployment',
+      role: 'DevOps / Deployment — Crosstechedu',
       tech: ['Docker', 'Linux VPS', 'TLS', 'Reverse proxy'],
       highlights: ['Live at mail.crosstechedu.com'],
       githubUrl: '',
