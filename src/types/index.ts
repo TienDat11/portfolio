@@ -25,6 +25,8 @@ export interface Project {
   tech: string[]
   highlights: string[]
   githubUrl: string
+  liveUrl?: string
+  liveLabel?: string
   category: 'mobile' | 'web' | 'ai' | 'other'
   hasGithubRepo: boolean
 }

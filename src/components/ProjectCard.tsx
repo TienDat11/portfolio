@@ -68,6 +68,17 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         </ul>
       )}
 
+      {project.liveUrl && (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block text-xs font-mono text-primary hover:underline mb-3"
+        >
+          {project.liveLabel ?? 'Live'} &#8599;
+        </a>
+      )}
+
       <div className="flex flex-wrap gap-1.5">
         {project.tech.slice(0, 8).map((t) => (
           <span

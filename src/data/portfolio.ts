@@ -81,6 +81,145 @@ export const portfolioData: PortfolioData = {
 
   projects: [
     {
+      id: 'face-find',
+      title: 'FaceFind — Event Photo Search by Face',
+      description:
+        'Event organisers paste a Google Drive folder link; the system scans and indexes faces, and guests scan a QR, take a selfie and instantly see the photos they appear in. Photos and selfies are never stored: only read into memory to compute embeddings.',
+      role: 'Developer — Team member at Cross Players',
+      tech: ['Python', 'FastAPI', 'YuNet', 'AuraFace', 'Google Drive API', 'Docker', 'Caddy'],
+      highlights: [
+        'YuNet face detection + AuraFace 512-d embeddings (commercial-friendly licences)',
+        '8-thread background indexer with auto-rescan and event expiry',
+        'QR + selfie guest flow over HTTPS, Docker + Caddy deployment',
+      ],
+      githubUrl: '',
+      category: 'ai',
+      hasGithubRepo: false,
+    },
+    {
+      id: 'gplx-exam-prep',
+      title: 'Ôn thi GPLX — 600 câu',
+      description:
+        'Driving-licence (A1/B1) theory exam prep app published on Google Play and the App Store, built with dev / staging / production flavors, localisation and AdMob.',
+      role: 'Flutter Developer — Team member at Cross Edu Tech',
+      tech: ['Flutter', 'Dart', 'Firebase', 'AdMob', 'Flavors', 'integration_test'],
+      highlights: [
+        'Released on Google Play and the App Store',
+        'Dev / staging / production build flavors',
+        'AdMob monetisation and localisation',
+      ],
+      githubUrl: '',
+      liveUrl: 'https://play.google.com/store/apps/details?id=com.crosstechedu.gplx',
+      liveLabel: 'Google Play',
+      category: 'mobile',
+      hasGithubRepo: false,
+    },
+    {
+      id: 'famhub',
+      title: 'FamHub — Safe Zone Alerts',
+      description:
+        'Parent / child app: parents set safe zones, get arrival alerts and see their child check-ins. Firebase / Firestore backend with location and push notifications.',
+      role: 'Flutter Developer — Team member at Cross Edu Tech',
+      tech: ['Flutter', 'Dart', 'Firebase', 'Firestore', 'FCM', 'Geolocation'],
+      highlights: [
+        'Released on the App Store (Nov 2026)',
+        'Safe-zone arrival alerts and check-ins',
+        'Firestore security rules and push notifications',
+      ],
+      githubUrl: '',
+      liveUrl: 'https://apps.apple.com/vn/app/id6828317767',
+      liveLabel: 'App Store',
+      category: 'mobile',
+      hasGithubRepo: false,
+    },
+    {
+      id: 'dnqat-crm',
+      title: 'DNQAT — Apartment CRM',
+      description:
+        'Internal operations CRM for apartment rentals in Da Nang: room-map dashboard, property list, tenant CRM (Kanban + list), role-based access and two-way Google Sheets sync.',
+      role: 'Flutter / Full-stack Developer',
+      tech: ['Flutter', 'Riverpod', 'go_router', 'Dio', 'FastAPI', 'PostgreSQL', 'Google Sheets API', 'Nginx'],
+      highlights: [
+        'Room map by building / floor / status',
+        'Tenant CRM with Kanban and list views',
+        'FastAPI + asyncpg backend behind Nginx',
+      ],
+      githubUrl: '',
+      category: 'mobile',
+      hasGithubRepo: false,
+    },
+    {
+      id: 'rag-real-estate',
+      title: 'RAG Real-Estate Legal Search',
+      description:
+        'RAG assistant for property brokers to search legal and pricing documents: 8-step FastAPI pipeline, LightRAG graph + vector retrieval on PostgreSQL, constrained read-only SQL for price facts, streaming citations in a Next.js 15 UI. Deployed on a VPS with Docker.',
+      role: 'AI / Full-stack Engineer — Personal project',
+      tech: ['Python', 'FastAPI', 'LightRAG', 'PostgreSQL', 'Next.js 15', 'TypeScript', 'Docker'],
+      highlights: [
+        'Parallel RAG + SQL legs with rerank, input / output guards',
+        '32-question golden set and 20 prompt-injection tests',
+        'Live on a VPS with Docker',
+      ],
+      githubUrl: 'https://github.com/TienDat11/chatbot-real-estate',
+      liveUrl: 'https://14-225-81-171.sslip.io',
+      liveLabel: 'Live demo',
+      category: 'ai',
+      hasGithubRepo: true,
+    },
+    {
+      id: 'omp-harness',
+      title: 'omp-adaptive-harness',
+      description:
+        'Versioned plugin for the omp coding-agent CLI adding deterministic tool policy and guardrails, a read-budget guard, session telemetry and bounded shadow decisions, verified across omp 18.12 - 18.17.',
+      role: 'Developer — Open source',
+      tech: ['TypeScript', 'Node 24', 'Python', 'Agent guardrails'],
+      highlights: [
+        'Deterministic tool policy and read-budget guard',
+        'Probe / compare commands across omp releases',
+      ],
+      githubUrl: 'https://github.com/TienDat11/omp-harness-plugin',
+      category: 'ai',
+      hasGithubRepo: true,
+    },
+    {
+      id: 'twake-mail',
+      title: 'Twake Mail on a VPS',
+      description:
+        'Deployed and operate Twake Mail (Linagora mail platform) on a VPS behind HTTPS: containers, domain and TLS setup, mail-service configuration.',
+      role: 'DevOps / Deployment',
+      tech: ['Docker', 'Linux VPS', 'TLS', 'Reverse proxy'],
+      highlights: ['Live at mail.crosstechedu.com'],
+      githubUrl: '',
+      liveUrl: 'https://mail.crosstechedu.com',
+      liveLabel: 'Live',
+      category: 'other',
+      hasGithubRepo: false,
+    },
+    {
+      id: 'kintai',
+      title: 'Kintai — HR & Payroll',
+      description:
+        'Attendance, leave and payroll management system (overtime and night-shift premiums, leave approvals): Java Spring Boot backend, TypeScript front-end, PostgreSQL.',
+      role: 'Full-stack Developer',
+      tech: ['Java', 'Spring Boot', 'TypeScript', 'PostgreSQL', 'Docker'],
+      highlights: ['Attendance and leave tracking', 'Payroll with overtime / night premiums'],
+      githubUrl: 'https://github.com/TienDat11/kintai',
+      category: 'web',
+      hasGithubRepo: true,
+    },
+    {
+      id: 'huecit-chatbot-rag',
+      title: 'HueCIT Chatbot RAG',
+      description:
+        'Technical-support chatbot: RAG over internal documentation plus screenshot analysis that recognises the error context and suggests fixes. 8-week plan, team of 2.',
+      role: 'AI Engineer — Team of 2',
+      tech: ['Python', 'RAG', 'Vision', 'pytest', 'pre-commit'],
+      highlights: ['Document Q&A pipeline', 'Error-screenshot analysis'],
+      githubUrl: 'https://github.com/TienDat11/huecit-chatbot-rag',
+      category: 'ai',
+      hasGithubRepo: true,
+    },
+    {
       id: 'family-health',
       title: 'Family Health',
       description:
