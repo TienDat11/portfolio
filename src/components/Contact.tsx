@@ -1,4 +1,5 @@
 import { portfolioData } from '../data/portfolio'
+import CvMenu from './CvMenu'
 
 export default function Contact() {
   const { profile } = portfolioData
@@ -20,13 +21,7 @@ export default function Contact() {
         >
           Say Hello
         </a>
-        <a
-          href="/portfolio/cv.pdf"
-          download
-          className="inline-block border border-slate-300 text-slate-600 font-mono text-sm px-7 py-2.5 rounded-lg hover:border-primary hover:text-primary transition-colors"
-        >
-          Download CV
-        </a>
+        <CvMenu tone="light" />
       </div>
 
       <div className="flex items-center justify-center gap-5 mt-8">

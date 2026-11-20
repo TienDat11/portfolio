@@ -1,0 +1,9 @@
+{
+  "name": "render-3d",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "three": "0.187.0",
+    "puppeteer-core": "25.18.1"
+  }
+}

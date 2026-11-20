@@ -1,0 +1,539 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; background: #03050a; overflow: hidden; }
+  canvas { display: block; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "./node_modules/three/build/three.module.js",
+    "three/addons/": "./node_modules/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const W = 1280, H = 800;
+const FONT = '"Segoe UI", "Inter", Arial, sans-serif';
+
+// ---------- helpers ----------
+const clamp01 = (x) => Math.min(1, Math.max(0, x));
+const ease = (t) => { t = clamp01(t); return t * t * (3 - 2 * t); };
+const smooth = (a, b, x) => ease((x - a) / (b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+const rad = (d) => (d * Math.PI) / 180;
+
+function txt(g, s, x, y, size, color, weight = 500, align = 'left') {
+  g.font = `${weight} ${size}px ${FONT}`;
+  g.fillStyle = color;
+  g.textAlign = align;
+  g.textBaseline = 'middle';
+  g.fillText(s, x, y);
+}
+function panel(g, x, y, w, h, r, fill = 'rgba(15,23,42,0.78)', stroke = 'rgba(148,163,184,0.2)') {
+  g.beginPath(); g.roundRect(x, y, w, h, r);
+  g.fillStyle = fill; g.fill();
+  g.lineWidth = 1.5; g.strokeStyle = stroke; g.stroke();
+}
+function pill(g, x, y, w, h, label, c, size = 13) {
+  g.beginPath(); g.roundRect(x, y, w, h, h / 2);
+  g.fillStyle = c + '26'; g.fill();
+  g.lineWidth = 1.2; g.strokeStyle = c + '99'; g.stroke();
+  txt(g, label, x + w / 2, y + h / 2, size, c, 700, 'center');
+}
+function canvasTex(c) {
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+function layer(w, h) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  return { c, g: c.getContext('2d') };
+}
+
+// ---------- renderer / scene ----------
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+document.body.appendChild(renderer.domElement);
+const canvas = renderer.domElement;
+
+const scene = new THREE.Scene();
+{
+  const bgC = layer(W, H);
+  const rg = bgC.g.createRadialGradient(W * 0.5, H * 0.42, 40, W * 0.5, H * 0.42, W * 0.72);
+  rg.addColorStop(0, '#1b2646');
+  rg.addColorStop(0.55, '#0b1020');
+  rg.addColorStop(1, '#03050a');
+  bgC.g.fillStyle = rg;
+  bgC.g.fillRect(0, 0, W, H);
+  scene.background = canvasTex(bgC.c);
+}
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.35;
+
+const camera = new THREE.PerspectiveCamera(35, W / H, 0.1, 100);
+camera.position.set(0, 1.35, 7.2);
+camera.lookAt(0.2, 0.85, 0);
+
+const hemi = new THREE.HemisphereLight(0x94a3b8, 0x0b1020, 0.35);
+scene.add(hemi);
+const key = new THREE.DirectionalLight(0xffffff, 1.5);
+key.position.set(-3, 6, 5);
+key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4, near: 1, far: 20 });
+key.shadow.camera.updateProjectionMatrix();
+key.shadow.radius = 4;
+key.shadow.bias = -0.0005;
+key.shadow.normalBias = 0.02;
+scene.add(key);
+const fill = new THREE.DirectionalLight(0xffffff, 0.4);
+fill.position.set(0, 2, 8);
+scene.add(fill);
+const rimA = new THREE.DirectionalLight(0x38bdf8, 2.4);
+rimA.position.set(-6, 3.5, -4);
+scene.add(rimA);
+const rimB = new THREE.DirectionalLight(0x6366f1, 2.1);
+rimB.position.set(6, 3.0, -3.5);
+scene.add(rimB);
+
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: 0.45 }));
+floor.rotation.x = -Math.PI / 2;
+floor.receiveShadow = true;
+scene.add(floor);
+
+// ---------- materials ----------
+const aluminum = new THREE.MeshStandardMaterial({ color: 0xc9ced6, metalness: 0.9, roughness: 0.28 });
+const bezelBlack = new THREE.MeshStandardMaterial({ color: 0x0a0b0e, metalness: 0.2, roughness: 0.6 });
+const keyDeck = new THREE.MeshStandardMaterial({ color: 0x17191e, metalness: 0.3, roughness: 0.55 });
+const trackpadMat = new THREE.MeshStandardMaterial({ color: 0x22252c, metalness: 0.4, roughness: 0.35 });
+const titanium = new THREE.MeshStandardMaterial({ color: 0x9ea4ae, metalness: 0.95, roughness: 0.32 });
+const glassBlack = new THREE.MeshStandardMaterial({ color: 0x07080b, metalness: 0.1, roughness: 0.12 });
+
+function shadowed(mesh) { mesh.castShadow = true; mesh.receiveShadow = true; return mesh; }
+
+// ---------- keyboard texture ----------
+function makeKeysTex() {
+  const k = layer(1024, 360);
+  const rows = 5, cols = 15, pad = 10;
+  const kw = (1024 - 2 * pad) / cols, kh = (360 - 2 * pad) / rows;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    k.g.beginPath();
+    k.g.roundRect(pad + c * kw + 3, pad + r * kh + 3, kw - 6, kh - 6, 12);
+    k.g.fillStyle = '#2b2f38'; k.g.fill();
+  }
+  return canvasTex(k.c);
+}
+
+// ---------- MacBook Pro ----------
+const laptop = new THREE.Group();
+laptop.scale.setScalar(1.12);
+scene.add(laptop);
+const laptopBase = shadowed(new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.09, 1.8), aluminum));
+laptopBase.position.y = 0.045;
+laptop.add(laptopBase);
+const deck = shadowed(new THREE.Mesh(new THREE.BoxGeometry(2.46, 0.012, 1.22), keyDeck));
+deck.position.set(0, 0.096, 0.1);
+laptop.add(deck);
+const keys = new THREE.Mesh(
+  new THREE.PlaneGeometry(2.3, 0.8),
+  new THREE.MeshStandardMaterial({ map: makeKeysTex(), transparent: true, roughness: 0.6, metalness: 0.2 })
+);
+keys.rotation.x = -Math.PI / 2;
+keys.position.set(0, 0.1025, -0.1);
+laptop.add(keys);
+const trackpad = shadowed(new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.004, 0.42), trackpadMat));
+trackpad.position.set(0, 0.1, 0.5);
+laptop.add(trackpad);
+
+const lidPivot = new THREE.Group();
+lidPivot.position.set(0, 0.09, -0.9);
+lidPivot.rotation.x = -0.26; // lid tilted back ~105 degrees from base
+laptop.add(lidPivot);
+const lidMats = [aluminum, aluminum, aluminum, aluminum, bezelBlack, aluminum];
+const lid = shadowed(new THREE.Mesh(new THREE.BoxGeometry(2.6, 1.72, 0.06), lidMats));
+lid.position.set(0, 0.86, 0);
+lidPivot.add(lid);
+
+const screenCv = layer(1024, 616);
+const screenTex = canvasTex(screenCv.c);
+const screenMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(2.36, 1.42),
+  new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false })
+);
+screenMesh.position.set(0, 0, 0.032);
+lid.add(screenMesh);
+const camDot = new THREE.Mesh(new THREE.CircleGeometry(0.012, 16), new THREE.MeshBasicMaterial({ color: 0x111111 }));
+camDot.position.set(0, 0.8, 0.0325);
+lid.add(camDot);
+
+// ---------- iPhone 16 Pro ----------
+function roundedRectShape(w, h, r) {
+  const s = new THREE.Shape();
+  const x = -w / 2, y = -h / 2;
+  s.moveTo(x + r, y);
+  s.lineTo(x + w - r, y);
+  s.quadraticCurveTo(x + w, y, x + w, y + r);
+  s.lineTo(x + w, y + h - r);
+  s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  s.lineTo(x + r, y + h);
+  s.quadraticCurveTo(x, y + h, x, y + h - r);
+  s.lineTo(x, y + r);
+  s.quadraticCurveTo(x, y, x + r, y);
+  return s;
+}
+const phone = new THREE.Group();
+scene.add(phone);
+{
+  const pw = 0.74, ph = 1.52, pr = 0.13, pd = 0.06;
+  const geo = new THREE.ExtrudeGeometry(roundedRectShape(pw, ph, pr), {
+    depth: pd, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.02, bevelSegments: 4, curveSegments: 14,
+  });
+  geo.translate(0, 0, -pd / 2);
+  const body = shadowed(new THREE.Mesh(geo, [glassBlack, titanium]));
+  phone.add(body);
+}
+const phoneCv = layer(780, 1688);
+const phoneTex = canvasTex(phoneCv.c);
+const phoneScreen = new THREE.Mesh(
+  new THREE.PlaneGeometry(0.66, 1.44),
+  new THREE.MeshBasicMaterial({ map: phoneTex, toneMapped: false })
+);
+phoneScreen.position.set(0, 0, 0.0515);
+phone.add(phoneScreen);
+
+// ---------- floating glass telemetry cards ----------
+function makeCardTex(lines, accent) {
+  const c = layer(512, 176);
+  const g = c.g;
+  const grad = g.createLinearGradient(0, 0, 512, 176);
+  grad.addColorStop(0, 'rgba(15,23,42,0.82)');
+  grad.addColorStop(1, 'rgba(30,41,59,0.55)');
+  g.beginPath(); g.roundRect(4, 4, 504, 168, 28);
+  g.fillStyle = grad; g.fill();
+  g.lineWidth = 3; g.strokeStyle = 'rgba(255,255,255,0.22)'; g.stroke();
+  g.fillStyle = accent;
+  g.beginPath(); g.roundRect(26, 34, 8, 108, 4); g.fill();
+  for (const ln of lines) txt(g, ln.t, 58, ln.y, ln.size, ln.color, ln.weight);
+  return canvasTex(c.c);
+}
+const CARD_DEFS = [
+  { act: 1, w: 1.1, pos: [-2.2, 1.45, 0.9], accent: '#38bdf8', lines: [
+    { t: '-38%', y: 72, size: 64, weight: 800, color: '#e0f2fe' },
+    { t: 'Hallucination', y: 134, size: 22, weight: 600, color: '#7dd3fc' } ] },
+  { act: 1, w: 1.45, pos: [-2.25, 0.65, 1.0], accent: '#6366f1', lines: [
+    { t: 'LangGraph · pgvector · FastAPI', y: 88, size: 29, weight: 700, color: '#e0e7ff' } ] },
+  { act: 1, w: 1.45, pos: [1.95, 1.75, 0.5], accent: '#38bdf8', lines: [
+    { t: 'YOLOv8 · YuNet · AuraFace', y: 88, size: 29, weight: 700, color: '#e0f2fe' } ] },
+  { act: 2, w: 1.45, pos: [-2.1, 1.55, 0.9], accent: '#10b981', lines: [
+    { t: 'FastAPI · Next.js 15', y: 66, size: 28, weight: 700, color: '#d1fae5' },
+    { t: 'PostgreSQL · Redis · Docker', y: 116, size: 25, weight: 600, color: '#a7f3d0' } ] },
+  { act: 2, w: 1.35, pos: [1.95, 1.75, 0.5], accent: '#3b82f6', lines: [
+    { t: '2-Way Google Sheets Sync', y: 88, size: 27, weight: 700, color: '#dbeafe' } ] },
+  { act: 2, w: 1.35, pos: [-2.25, 0.65, 1.0], accent: '#10b981', lines: [
+    { t: 'Kanban · RBAC · Linux VPS', y: 88, size: 27, weight: 700, color: '#d1fae5' } ] },
+  { act: 3, w: 1.3, pos: [-2.3, 2.4, 0.6], accent: '#f59e0b', lines: [
+    { t: '4 Live Store Apps', y: 58, size: 38, weight: 800, color: '#fef3c7' },
+    { t: 'Family Health · Connect Car', y: 110, size: 21, weight: 600, color: '#fde68a' },
+    { t: 'GPLX 600 · FamHub', y: 146, size: 21, weight: 600, color: '#fde68a' } ] },
+  { act: 3, w: 0.85, pos: [-2.75, 0.95, 0.4], accent: '#8b5cf6', lines: [
+    { t: 'Google Play', y: 70, size: 34, weight: 800, color: '#ede9fe' },
+    { t: 'Live on Android', y: 124, size: 20, weight: 600, color: '#c4b5fd' } ] },
+  { act: 3, w: 0.85, pos: [2.25, 2.2, 0.4], accent: '#f59e0b', lines: [
+    { t: 'App Store', y: 70, size: 34, weight: 800, color: '#fef3c7' },
+    { t: 'Live on iOS', y: 124, size: 20, weight: 600, color: '#fde68a' } ] },
+];
+const cards = CARD_DEFS.map((d, i) => {
+  const mat = new THREE.MeshBasicMaterial({ map: makeCardTex(d.lines, d.accent), transparent: true, depthWrite: false, opacity: 0 });
+  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(d.w, (d.w * 176) / 512), mat);
+  mesh.position.set(...d.pos);
+  mesh.renderOrder = 10;
+  scene.add(mesh);
+  return { ...d, mat, mesh, idx: i };
+});
+
+// ---------- screen contents ----------
+function drawAI(g, ph) {
+  const W = 1024, H = 616, t = ph * Math.PI * 2;
+  const bg = g.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#0b1222'); bg.addColorStop(1, '#0a1a2e');
+  g.fillStyle = bg; g.fillRect(0, 0, W, H);
+
+  // sidebar
+  panel(g, 12, 12, 176, 592, 18);
+  txt(g, 'UniGuide AI v2', 32, 44, 20, '#e2e8f0', 700);
+  txt(g, 'Multi-Agent RAG', 32, 68, 14, '#38bdf8', 600);
+  ['Chat', 'Agents', 'Knowledge', 'Vision', 'Evals'].forEach((n, i) => {
+    const y = 110 + i * 44;
+    if (i === 1) panel(g, 24, y - 17, 152, 34, 10, 'rgba(56,189,248,0.18)', 'rgba(56,189,248,0.45)');
+    txt(g, n, 44, y, 16, i === 1 ? '#e0f2fe' : '#94a3b8', i === 1 ? 700 : 500);
+  });
+  txt(g, 'Vision stack', 32, 350, 13, '#64748b', 700);
+  txt(g, 'YOLOv8 · YuNet', 32, 376, 14, '#cbd5e1', 600);
+  txt(g, 'AuraFace', 32, 398, 14, '#cbd5e1', 600);
+
+  // header
+  panel(g, 204, 12, 808, 52, 16);
+  txt(g, 'Multi-Agent RAG & Computer Vision', 228, 38, 18, '#e2e8f0', 700);
+  panel(g, 850, 24, 144, 28, 14, 'rgba(16,185,129,0.15)', 'rgba(16,185,129,0.5)');
+  g.beginPath(); g.arc(868, 38, 5, 0, Math.PI * 2);
+  g.fillStyle = `rgba(16,185,129,${0.6 + 0.4 * Math.sin(t * 2)})`; g.fill();
+  txt(g, 'LangGraph · live', 882, 38, 13, '#6ee7b7', 600);
+
+  // chat + agent trace
+  panel(g, 204, 76, 410, 528, 18);
+  panel(g, 226, 100, 366, 54, 14, 'rgba(56,189,248,0.16)', 'rgba(56,189,248,0.35)');
+  txt(g, 'Summarise lease risks in the Q3 contracts', 242, 127, 15, '#e0f2fe', 500);
+  const steps = [
+    ['Planner', 'decomposed into 3 sub-tasks', 1.0],
+    ['Retriever · pgvector', '12 chunks · top-k 8', 0.82],
+    ['Reranker · cross-encoder', 'score 0.91', 0.91],
+    ['Verifier', 'grounded · citations ✓', 1.0],
+  ];
+  steps.forEach((s, i) => {
+    const y = 186 + i * 88;
+    panel(g, 226, y, 366, 72, 14, 'rgba(30,41,59,0.8)', 'rgba(148,163,184,0.15)');
+    txt(g, s[0], 246, y + 24, 16, '#f1f5f9', 700);
+    txt(g, s[1], 246, y + 50, 13, '#94a3b8', 500);
+    g.beginPath(); g.roundRect(462, y + 30, 112, 8, 4); g.fillStyle = 'rgba(148,163,184,0.2)'; g.fill();
+    const shimmer = ((ph * 3 + i * 0.25) % 1) * 112;
+    g.save(); g.beginPath(); g.roundRect(462, y + 30, 112, 8, 4); g.clip();
+    g.fillStyle = '#38bdf8'; g.fillRect(462, y + 30, 112 * s[2], 8);
+    g.fillStyle = 'rgba(224,242,254,0.8)'; g.fillRect(462 + shimmer - 10, y + 30, 20, 8);
+    g.restore();
+  });
+
+  // hallucination card
+  panel(g, 632, 76, 368, 250, 18);
+  txt(g, 'Hallucination rate', 652, 100, 14, '#94a3b8', 600);
+  txt(g, '-38%', 652, 158, 58, '#38bdf8', 800);
+  txt(g, 'vs. baseline RAG · LangGraph agents', 652, 204, 14, '#cbd5e1', 500);
+  for (let i = 0; i < 6; i++) {
+    const hgt = 40 + 60 * (0.5 + 0.5 * Math.sin(t + i * 0.9));
+    g.beginPath(); g.roundRect(652 + i * 52, 300 - hgt, 36, hgt, 6);
+    g.fillStyle = i < 3 ? 'rgba(248,113,113,0.7)' : 'rgba(56,189,248,0.85)'; g.fill();
+  }
+
+  // YOLOv8 tennis analytics + FaceFind
+  panel(g, 632, 340, 368, 264, 18);
+  txt(g, 'YOLOv8 Tennis Analytics', 652, 362, 14, '#94a3b8', 600);
+  g.fillStyle = '#0f2f2a'; g.beginPath(); g.roundRect(652, 378, 328, 102, 10); g.fill();
+  g.strokeStyle = 'rgba(255,255,255,0.4)'; g.lineWidth = 1.5;
+  g.strokeRect(668, 390, 296, 78);
+  g.beginPath(); g.moveTo(816, 390); g.lineTo(816, 468); g.stroke();
+  const bx = 652 + 328 * (0.5 + 0.45 * Math.sin(t * 1.3));
+  const by = 430 + 26 * Math.sin(t * 2.6);
+  g.strokeStyle = '#38bdf8'; g.lineWidth = 2;
+  g.strokeRect(bx - 34, by - 22, 34, 44);
+  g.beginPath(); g.arc(bx, by, 6, 0, Math.PI * 2); g.fillStyle = '#fde047'; g.fill();
+  txt(g, 'FaceFind · AuraFace', 652, 500, 14, '#94a3b8', 600);
+  [['98%', 0], ['96%', 1], ['94%', 2], ['91%', 3]].forEach(([lbl, k]) => {
+    const cx = 690 + k * 70, cy = 540;
+    g.beginPath(); g.arc(cx, cy, 22, 0, Math.PI * 2);
+    const gr = g.createLinearGradient(cx - 22, cy - 22, cx + 22, cy + 22);
+    gr.addColorStop(0, '#1e3a8a'); gr.addColorStop(1, '#0e7490');
+    g.fillStyle = gr; g.fill();
+    g.lineWidth = 2; g.strokeStyle = 'rgba(56,189,248,0.8)'; g.stroke();
+    txt(g, lbl, cx, 582, 13, '#e0f2fe', 700, 'center');
+  });
+}
+
+function drawCRM(g, ph) {
+  const W = 1024, H = 616, t = ph * Math.PI * 2;
+  const bg = g.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#07131d'); bg.addColorStop(1, '#0a1f24');
+  g.fillStyle = bg; g.fillRect(0, 0, W, H);
+
+  panel(g, 12, 12, 1000, 52, 16);
+  txt(g, 'Crosstechedu · Apartment CRM', 32, 38, 19, '#f0fdf4', 700);
+  pill(g, 640, 24, 128, 28, 'RBAC · Admin', '#34d399');
+  pill(g, 780, 24, 216, 28, 'Google Sheets sync: live', '#60a5fa');
+
+  const cols = [
+    ['Lead', ['Nguyen A.|Studio 402 · Hải Châu', 'Tran B.|2BR · An Thượng', 'Le C.|1BR · Sơn Trà'], '#94a3b8'],
+    ['Viewing', ['Pham D.|3BR · Ngũ Hành Sơn', 'Vo E.|Studio · Thanh Khê'], '#38bdf8'],
+    ['Negotiation', ['Do F.|2BR · Hải Châu', 'Bui G.|1BR · Sơn Trà'], '#fbbf24'],
+    ['Signed', ['Dang H.|2BR · Cẩm Lệ'], '#34d399'],
+  ];
+  const total = cols.reduce((a, c) => a + c[1].length, 0);
+  const hi = Math.floor(ph * total) % total;
+  let k = 0;
+  cols.forEach(([label, items, col], ci) => {
+    const x = 12 + ci * 250;
+    panel(g, x, 76, 238, 354, 18);
+    txt(g, label, x + 18, 102, 17, '#e2e8f0', 700);
+    pill(g, x + 176, 88, 46, 24, String(items.length), col, 12);
+    items.forEach((it, n) => {
+      const [name, detail] = it.split('|');
+      const y = 124 + n * 92;
+      const active = k === hi;
+      panel(g, x + 10, y, 218, 80, 12, 'rgba(15,23,42,0.92)', active ? col : 'rgba(148,163,184,0.18)');
+      if (active) { g.shadowColor = col; g.shadowBlur = 16; panel(g, x + 10, y, 218, 80, 12, 'rgba(15,23,42,0.92)', col); g.shadowBlur = 0; }
+      txt(g, name, x + 26, y + 28, 16, '#f1f5f9', 700);
+      txt(g, detail, x + 26, y + 52, 13, '#94a3b8', 500);
+      k++;
+    });
+  });
+
+  panel(g, 12, 446, 496, 158, 18);
+  txt(g, 'Next.js 15 · Real-Estate RAG', 30, 470, 17, '#f0fdf4', 700);
+  panel(g, 30, 492, 330, 40, 12, 'rgba(52,211,153,0.14)', 'rgba(52,211,153,0.4)');
+  txt(g, '2BR near the river under $800/mo?', 44, 512, 14, '#d1fae5', 500);
+  panel(g, 120, 540, 370, 40, 12, 'rgba(30,41,59,0.9)', 'rgba(148,163,184,0.2)');
+  txt(g, '3 matches · grounded in 1,842 listings', 134, 560, 13, '#e2e8f0', 500);
+  txt(g, 'pgvector · reranked · streaming', 30, 594, 12, '#64748b', 500);
+
+  panel(g, 520, 446, 492, 158, 18);
+  txt(g, 'Docker · Linux VPS Mail Server', 538, 470, 17, '#f0fdf4', 700);
+  txt(g, 'Postfix · Dovecot · Docker Compose', 538, 496, 13, '#94a3b8', 500);
+  pill(g, 538, 512, 86, 26, 'SPF ✓', '#34d399', 12);
+  pill(g, 632, 512, 86, 26, 'DKIM ✓', '#34d399', 12);
+  pill(g, 726, 512, 96, 26, 'DMARC ✓', '#34d399', 12);
+  g.beginPath(); g.roundRect(538, 556, 456, 8, 4); g.fillStyle = 'rgba(148,163,184,0.2)'; g.fill();
+  g.beginPath(); g.roundRect(538, 556, 456 * 0.92, 8, 4); g.fillStyle = '#34d399'; g.fill();
+  txt(g, 'mail queue 0 · uptime 99.9% · healthy', 538, 584, 13, '#6ee7b7', 600);
+}
+
+function drawStore(g, ph) {
+  const W = 390, H = 844, t = ph * Math.PI * 2;
+  g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
+  g.save();
+  g.beginPath(); g.roundRect(0, 0, W, H, 52); g.clip();
+  const bg = g.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#0b1020'); bg.addColorStop(1, '#111a2e');
+  g.fillStyle = bg; g.fillRect(0, 0, W, H);
+
+  txt(g, '9:41', 34, 34, 15, '#f8fafc', 700);
+  g.fillStyle = '#000'; g.beginPath(); g.roundRect(135, 12, 120, 34, 17); g.fill();
+  txt(g, 'Live Store Apps', 26, 92, 28, '#f8fafc', 800);
+  txt(g, 'Google Play · App Store', 26, 118, 14, '#94a3b8', 500);
+
+  const apps = [
+    { n: ['Family Health'], c: '#10b981', l: 'FH' },
+    { n: ['Connect Car', 'Booking'], c: '#3b82f6', l: 'CC' },
+    { n: ['GPLX 600'], c: '#f97316', l: '60' },
+    { n: ['FamHub'], c: '#8b5cf6', l: 'FA' },
+  ];
+  const act = Math.floor(ph * 4) % 4;
+  apps.forEach((a, i) => {
+    const x = 24 + (i % 2) * 172, y = 132 + Math.floor(i / 2) * 186, w = 164, h = 178;
+    panel(g, x, y, w, h, 22, 'rgba(30,41,59,0.85)', i === act ? '#38bdf8' : 'rgba(148,163,184,0.18)');
+    if (i === act) { g.shadowColor = '#38bdf8'; g.shadowBlur = 18; panel(g, x, y, w, h, 22, 'rgba(30,41,59,0.85)', '#38bdf8'); g.shadowBlur = 0; }
+    g.beginPath(); g.roundRect(x + 16, y + 16, 48, 48, 14); g.fillStyle = a.c; g.fill();
+    txt(g, a.l, x + 40, y + 40, 16, '#ffffff', 800, 'center');
+    a.n.forEach((line, k) => txt(g, line, x + 16, y + 88 + k * 20, 16, '#f1f5f9', 700));
+    const by = y + h - 48;
+    pill(g, x + 14, by, 136, 20, 'Google Play', '#34d399', 11);
+    pill(g, x + 14, by + 24, 136, 20, 'App Store', '#60a5fa', 11);
+  });
+
+  const cy = 512;
+  panel(g, 24, cy, 342, 310, 24);
+  txt(g, 'Connect Car · live', 44, cy + 30, 16, '#f1f5f9', 700);
+  pill(g, 262, cy + 18, 86, 22, 'LIVE', '#ef4444', 11);
+  g.save();
+  g.beginPath(); g.roundRect(40, cy + 52, 310, 170, 18); g.clip();
+  g.fillStyle = '#0f172a'; g.fillRect(40, cy + 52, 310, 170);
+  g.strokeStyle = 'rgba(148,163,184,0.12)'; g.lineWidth = 1;
+  for (let x = 40; x <= 350; x += 31) { g.beginPath(); g.moveTo(x, cy + 52); g.lineTo(x, cy + 222); g.stroke(); }
+  for (let y = cy + 52; y <= cy + 222; y += 26) { g.beginPath(); g.moveTo(40, y); g.lineTo(350, y); g.stroke(); }
+  const P0 = [70, cy + 200], C = [200, cy + 110], P1 = [322, cy + 84];
+  g.setLineDash([6, 6]); g.strokeStyle = '#38bdf8'; g.lineWidth = 3;
+  g.beginPath(); g.moveTo(...P0); g.quadraticCurveTo(...C, ...P1); g.stroke();
+  g.setLineDash([]);
+  const u = 0.15 + 0.7 * (0.5 + 0.5 * Math.sin(t));
+  const cx = (1 - u) * (1 - u) * P0[0] + 2 * (1 - u) * u * C[0] + u * u * P1[0];
+  const cyy = (1 - u) * (1 - u) * P0[1] + 2 * (1 - u) * u * C[1] + u * u * P1[1];
+  g.beginPath(); g.arc(cx, cyy, 14, 0, Math.PI * 2); g.fillStyle = 'rgba(56,189,248,0.3)'; g.fill();
+  g.beginPath(); g.arc(cx, cyy, 6, 0, Math.PI * 2); g.fillStyle = '#38bdf8'; g.fill();
+  g.beginPath(); g.arc(P1[0], P1[1], 7, 0, Math.PI * 2); g.fillStyle = '#f97316'; g.fill();
+  g.restore();
+  txt(g, 'Driver 3 min away', 44, cy + 248, 15, '#cbd5e1', 600);
+  txt(g, 'Booking confirmed ✓', 44, cy + 276, 16, '#6ee7b7', 700);
+  g.restore();
+}
+
+const LAY_AI = layer(1024, 616);
+const LAY_CRM = layer(1024, 616);
+const phoneG = phoneCv.g;
+
+// ---------- palettes (rim light colours per act) ----------
+const P1 = [new THREE.Color('#38bdf8'), new THREE.Color('#6366f1')];
+const P2 = [new THREE.Color('#10b981'), new THREE.Color('#3b82f6')];
+const P3 = [new THREE.Color('#8b5cf6'), new THREE.Color('#f59e0b')];
+
+// ---------- frame state ----------
+function setFrame(f) {
+  const s1 = smooth(20.5, 21.5, f);   // act 1 -> act 2 (boundary frames only)
+  const s2 = smooth(40.5, 41.5, f);   // act 2 -> act 3 (boundary frames only)
+  const ph = f / 60;
+
+  // laptop screen: AI dashboard (act 1) crossfades into CRM (act 2+)
+  drawAI(LAY_AI.g, ph);
+  drawCRM(LAY_CRM.g, ph);
+  const sg = screenCv.g;
+  sg.globalAlpha = 1;
+  sg.drawImage(LAY_AI.c, 0, 0);
+  sg.globalAlpha = s1;
+  sg.drawImage(LAY_CRM.c, 0, 0);
+  sg.globalAlpha = 1;
+  screenTex.needsUpdate = true;
+
+  // phone screen (act 3)
+  phoneG.setTransform(1, 0, 0, 1, 0, 0);
+  phoneG.clearRect(0, 0, 780, 1688);
+  phoneG.setTransform(2, 0, 0, 2, 0, 0);
+  drawStore(phoneG, ph);
+  phoneG.setTransform(1, 0, 0, 1, 0, 0);
+  phoneTex.needsUpdate = true;
+
+  // laptop yaw: act 1 -28 -> -5, act 2 -5 -> +22, act 3 +22 -> +35
+  let yaw;
+  if (f <= 20) yaw = lerp(-28, -5, ease((f - 1) / 19));
+  else if (f <= 40) yaw = lerp(-5, 22, ease((f - 20) / 20));
+  else yaw = lerp(22, 35, ease((f - 40) / 20));
+  laptop.rotation.y = rad(yaw);
+
+  // phone orbit-in during act 3
+  const pe = smooth(38.5, 48.5, f);
+  phone.visible = pe > 0.002;
+  phone.scale.setScalar(lerp(0.7, 1, pe));
+  phone.position.set(lerp(3.4, 1.55, pe), lerp(0.2, 0.86, pe) + 0.35 * Math.sin(Math.PI * pe), lerp(-1.6, 0.85, pe));
+  phone.rotation.y = lerp(0.9, -0.22, pe);
+  laptop.position.x = -0.55 * pe;
+
+  // palettes
+  rimA.color.copy(P1[0]).lerp(P2[0], s1).lerp(P3[0], s2);
+  rimB.color.copy(P1[1]).lerp(P2[1], s1).lerp(P3[1], s2);
+
+  // telemetry cards per act
+  const weights = [1 - s1, s1 * (1 - s2), s2];
+  for (const c of cards) {
+    const w = weights[c.act - 1];
+    c.mat.opacity = w * 0.95;
+    c.mesh.visible = w > 0.001;
+    const bob = 0.07 * Math.sin(f * 0.32 + c.idx * 1.7);
+    c.mesh.position.y = c.pos[1] + bob;
+  }
+}
+
+window.renderFrame = (f) => {
+  setFrame(f);
+  renderer.render(scene, camera);
+  return canvas.toDataURL('image/png');
+};
+window.__ready = true;
+</script>
+</body>
+</html>

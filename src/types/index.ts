@@ -1,15 +1,20 @@
+export interface CvLinks {
+  fullstack: string
+  ai: string
+  mobile: string
+}
+
 export interface Profile {
   name: string
-  firstName: string
-  lastName: string
   title: string
-  subtitle: string
-  description: string
+  tagline: string
   location: string
+  bio: string
   email: string
   phone: string
   github: string
   githubUrl: string
+  cvs: CvLinks
 }
 
 export interface SkillCategory {
@@ -17,27 +22,35 @@ export interface SkillCategory {
   items: string[]
 }
 
+export type ProjectTrack = 'ai' | 'fullstack' | 'mobile'
+
+export interface ProjectLink {
+  label: string
+  url: string
+  kind: 'github' | 'live' | 'store-play' | 'store-appstore'
+}
+
+export type ProjectPreview =
+  | { kind: 'terminal'; lines: string[] }
+  | { kind: 'diagram'; nodes: string[] }
+  | { kind: 'store'; app: string }
+
 export interface Project {
   id: string
   title: string
+  track: ProjectTrack
   description: string
-  role: string
+  metric: string
   tech: string[]
   highlights: string[]
-  githubUrl: string
-  liveUrl?: string
-  liveLabel?: string
-  category: 'mobile' | 'web' | 'ai' | 'other'
-  hasGithubRepo: boolean
+  links: ProjectLink[]
+  preview: ProjectPreview
 }
 
 export interface Experience {
   company: string
-  client?: string
   role: string
   period: string
-  location: string
-  description: string
   highlights: string[]
 }
 
@@ -47,8 +60,17 @@ export interface Education {
   period: string
 }
 
+export interface ShowcaseAct {
+  id: string
+  label: string
+  headline: string
+  body: string
+  stats: string[]
+}
+
 export interface PortfolioData {
   profile: Profile
+  showcase: ShowcaseAct[]
   skills: SkillCategory[]
   projects: Project[]
   experience: Experience[]

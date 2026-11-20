@@ -1,94 +1,122 @@
-import type { Project } from '../types'
+import type { Project, ProjectTrack } from '../types'
+
+export const TRACK_LABEL: Record<ProjectTrack, string> = {
+  ai: 'Applied AI & CV',
+  fullstack: 'Full-Stack & Cloud',
+  mobile: 'Mobile · Play & App Store',
+}
+
+function ProjectPreviewPane({ project }: { project: Project }) {
+  const { preview } = project
+
+  if (preview.kind === 'terminal') {
+    return (
+      <div className="rounded-xl border border-slate-800 bg-[#0b1020] p-4 font-mono text-[11px] leading-relaxed text-slate-300">
+        <div className="mb-3 flex gap-1.5" aria-hidden>
+          <span className="h-2 w-2 rounded-full bg-rose-400/80" />
+          <span className="h-2 w-2 rounded-full bg-amber-300/80" />
+          <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
+        </div>
+        {preview.lines.map((line, i) => (
+          <p key={i} className={line.startsWith('$') ? 'text-sky-300' : undefined}>
+            {line}
+          </p>
+        ))}
+      </div>
+    )
+  }
+
+  if (preview.kind === 'diagram') {
+    return (
+      <div className="grid grid-cols-2 gap-2">
+        {preview.nodes.map((node, i) => (
+          <div
+            key={node}
+            style={{ transitionDelay: `${i * 40}ms` }}
+            className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-2 font-mono text-[11px] text-slate-600 transition-colors duration-300 group-hover:border-primary/40 group-hover:bg-primary-light/50 group-hover:text-primary-dark"
+          >
+            {node}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  const storeLabels = project.links.filter((link) => link.kind.startsWith('store-')).map((link) => link.label)
+  return (
+    <div className="flex items-center gap-3 rounded-xl bg-gradient-to-br from-slate-900 to-slate-700 p-4 text-white">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/10 font-mono text-lg font-bold">
+        {preview.app.slice(0, 2).toUpperCase()}
+      </div>
+      <div className="min-w-0">
+        <p className="truncate text-sm font-semibold">{preview.app}</p>
+        <div className="mt-1 flex flex-wrap gap-1.5">
+          {storeLabels.map((label) => (
+            <span key={label} className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[10px] text-slate-300">
+              {label}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 interface ProjectCardProps {
   project: Project
   index: number
 }
 
-const categoryColors: Record<string, string> = {
-  mobile: 'text-blue-600 bg-blue-50 border-blue-200',
-  web: 'text-emerald-600 bg-emerald-50 border-emerald-200',
-  ai: 'text-purple-600 bg-purple-50 border-purple-200',
-  other: 'text-orange-600 bg-orange-50 border-orange-200',
-}
-
-const categoryLabels: Record<string, string> = {
-  mobile: 'Flutter',
-  web: 'Web',
-  ai: 'AI / Data',
-  other: 'Other',
-}
-
 export default function ProjectCard({ project, index }: ProjectCardProps) {
-  const catColor = categoryColors[project.category] || categoryColors.other
-
   return (
-    <div className="bg-white rounded-xl p-5 hover:translate-y-[-3px] transition-all duration-300 border border-slate-200 hover:border-primary/30 shadow-sm hover:shadow-md group">
-      <div className="flex items-start justify-between mb-3">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${catColor}`}>
-              {categoryLabels[project.category]}
-            </span>
-            <span className="text-slate-300 font-mono text-xs">
-              {String(index + 1).padStart(2, '0')}
-            </span>
-          </div>
-          <h3 className="text-lg font-bold text-slate-800 group-hover:text-primary transition-colors">
-            {project.title}
-          </h3>
-        </div>
-        {project.githubUrl && (
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-400 hover:text-slate-700 transition-colors"
-            aria-label={`GitHub repository for ${project.title}`}
-          >
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-            </svg>
-          </a>
-        )}
+    <article className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5">
+      <ProjectPreviewPane project={project} />
+
+      <div className="mt-5 flex items-center justify-between gap-3">
+        <span className="font-mono text-[11px] text-slate-400">{String(index + 1).padStart(2, '0')}</span>
+        <span className="rounded-full bg-primary-light px-2.5 py-0.5 font-mono text-[10px] text-primary-dark">
+          {TRACK_LABEL[project.track]}
+        </span>
       </div>
 
-      <p className="text-slate-500 text-sm leading-relaxed mb-3">
-        {project.description}
+      <h3 className="mt-3 text-lg font-semibold text-slate-900">{project.title}</h3>
+      <p className="mt-2 inline-flex w-fit rounded-md bg-slate-900 px-2 py-1 font-mono text-[11px] text-sky-200">
+        {project.metric}
       </p>
+      <p className="mt-3 text-sm leading-relaxed text-slate-600">{project.description}</p>
 
-      {project.highlights.length > 0 && (
-        <ul className="space-y-1 mb-3">
-          {project.highlights.slice(0, 3).map((h, i) => (
-            <li key={i} className="text-slate-500 text-xs flex items-start gap-1.5">
-              <span className="text-primary text-[10px] mt-0.5">&#9654;</span>
-              {h}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {project.liveUrl && (
-        <a
-          href={project.liveUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block text-xs font-mono text-primary hover:underline mb-3"
-        >
-          {project.liveLabel ?? 'Live'} &#8599;
-        </a>
-      )}
-
-      <div className="flex flex-wrap gap-1.5">
-        {project.tech.slice(0, 8).map((t) => (
-          <span
-            key={t}
-            className="text-[10px] font-mono text-primary/70 bg-primary/5 px-1.5 py-0.5 rounded"
-          >
-            {t}
-          </span>
+      <ul className="mt-4 space-y-1.5 text-xs text-slate-500">
+        {project.highlights.slice(0, 3).map((highlight) => (
+          <li key={highlight} className="flex items-start gap-2">
+            <span className="mt-0.5 text-primary">&#9654;</span>
+            <span>{highlight}</span>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+
+      <ul className="mt-4 flex flex-wrap gap-1.5">
+        {project.tech.map((tech) => (
+          <li key={tech} className="rounded-md border border-slate-200 px-2 py-0.5 font-mono text-[10px] text-slate-600">
+            {tech}
+          </li>
+        ))}
+      </ul>
+
+      {project.links.length > 0 && (
+        <div className="mt-auto flex flex-wrap gap-x-4 gap-y-2 pt-5">
+          {project.links.map((link) => (
+            <a
+              key={link.url}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs text-primary hover:underline"
+            >
+              {link.label} ↗
+            </a>
+          ))}
+        </div>
+      )}
+    </article>
   )
 }

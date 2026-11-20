@@ -1,46 +1,57 @@
 import { useState } from 'react'
 import { portfolioData } from '../data/portfolio'
+import type { ProjectTrack } from '../types'
 import ProjectCard from './ProjectCard'
+import ScrollSection from './ScrollSection'
 
-type CategoryFilter = 'all' | 'mobile' | 'web' | 'ai'
+type TrackFilter = 'all' | ProjectTrack
 
-const filters: { label: string; value: CategoryFilter }[] = [
-  { label: 'All', value: 'all' },
-  { label: 'Flutter', value: 'mobile' },
-  { label: 'Web', value: 'web' },
-  { label: 'AI / Data', value: 'ai' },
+const FILTERS: { value: TrackFilter; label: string }[] = [
+  { value: 'all', label: 'All Systems' },
+  { value: 'ai', label: 'Applied AI & CV' },
+  { value: 'fullstack', label: 'Full-Stack & Cloud' },
+  { value: 'mobile', label: 'Mobile · Play Store & App Store' },
 ]
 
 export default function Projects() {
   const { projects } = portfolioData
-  const [filter, setFilter] = useState<CategoryFilter>('all')
+  const [filter, setFilter] = useState<TrackFilter>('all')
 
-  const filtered = filter === 'all' ? projects : projects.filter((p) => p.category === filter)
+  const visible = filter === 'all' ? projects : projects.filter((project) => project.track === filter)
+  const countFor = (value: TrackFilter) =>
+    value === 'all' ? projects.length : projects.filter((project) => project.track === value).length
 
   return (
-    <section id="projects" className="px-6 py-16 max-w-4xl mx-auto">
+    <section id="projects" className="mx-auto max-w-5xl px-6 py-16">
       <h2 className="section-heading">
         <span className="section-number">04.</span>
         Featured Projects
       </h2>
-      <div className="flex gap-2 mb-8">
-        {filters.map((f) => (
+
+      <div role="tablist" aria-label="Filter projects by track" className="mb-8 flex flex-wrap gap-2">
+        {FILTERS.map((item) => (
           <button
-            key={f.value}
-            onClick={() => setFilter(f.value)}
-            className={`font-mono text-xs px-3 py-1.5 rounded-lg border transition-colors ${
-              filter === f.value
-                ? 'border-primary text-primary bg-primary/5'
-                : 'border-slate-200 text-slate-400 hover:text-primary hover:border-primary/40'
+            key={item.value}
+            type="button"
+            role="tab"
+            aria-selected={filter === item.value}
+            onClick={() => setFilter(item.value)}
+            className={`rounded-lg border px-3 py-1.5 font-mono text-xs transition-colors ${
+              filter === item.value
+                ? 'border-primary bg-primary/5 text-primary'
+                : 'border-slate-200 text-slate-400 hover:border-primary/40 hover:text-primary'
             }`}
           >
-            {f.label}
+            {item.label} ({countFor(item.value)})
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {filtered.map((project, i) => (
-          <ProjectCard key={project.id} project={project} index={i} />
+
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        {visible.map((project, i) => (
+          <ScrollSection key={project.id} delay={(i % 2) * 80}>
+            <ProjectCard project={project} index={i} />
+          </ScrollSection>
         ))}
       </div>
     </section>

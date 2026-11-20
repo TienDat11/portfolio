@@ -1,5 +1,5 @@
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
+import HeroScrollStage from './components/HeroScrollStage'
 import About from './components/About'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
@@ -12,8 +12,8 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main className="pt-16">
-        <Hero />
+      <main>
+        <HeroScrollStage />
         <About />
         <div className="section-alt">
           <Skills />
