@@ -15,7 +15,7 @@ export default function Experience() {
         <div className="mb-10 grid gap-3 rounded-2xl border border-primary/20 bg-white p-5 sm:grid-cols-3">
           <div>
             <p className="font-mono text-2xl font-bold text-primary">2.5+ yrs</p>
-            <p className="mt-1 text-xs text-slate-500">Shipping production software since Aug 2023</p>
+            <p className="mt-1 text-xs text-slate-500">Shipping production software since Sep 2023</p>
           </div>
           <div>
             <p className="font-mono text-2xl font-bold text-primary">{experience.length} companies</p>

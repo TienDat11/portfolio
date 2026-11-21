@@ -10,7 +10,7 @@ export const portfolioData: PortfolioData = {
     tagline:
       '2.5+ years building production Multi-Agent RAG systems, FastAPI & Next.js enterprise platforms, and 4 live Flutter apps on Google Play & App Store.',
     location: 'Đà Nẵng / Huế, Vietnam (Open to HCMC & Remote)',
-    bio: 'Full-stack, Applied AI, and Mobile Engineer with 2.5 years of practical experience since starting at Rikkeisoft at the beginning of my 2nd year of university (Aug 2023). I take features from React, Next.js, TypeScript, and Flutter frontends through Python FastAPI / Django REST backends to PostgreSQL, pgvector, Redis, Docker, and Linux VPS deployments — with four live apps on Google Play and the App Store and production Multi-Agent RAG systems.',
+    bio: 'Full-stack, Applied AI, and Mobile Engineer with 2.5 years of practical experience since starting at Rikkeisoft at the beginning of my 2nd year of university (Sep 2023). I take features from React, Next.js, TypeScript, and Flutter frontends through Python FastAPI / Django REST backends to PostgreSQL, pgvector, Redis, Docker, and Linux VPS deployments — with four live apps on Google Play and the App Store and production Multi-Agent RAG systems.',
     email: 'ngothiendat258@gmail.com',
     phone: '0768908472',
     github: 'TienDat11',
@@ -502,9 +502,9 @@ export const portfolioData: PortfolioData = {
     {
       company: 'Rikkeisoft',
       role: 'Fresher Front-End Developer',
-      period: 'Aug 2023 – Apr 2024',
+      period: 'Sep 2023 – Apr 2024',
       highlights: [
-        'Joined as a 2nd-year university student (Aug 2023)',
+        'Joined as a 2nd-year university student (Sep 2023)',
         'Built a React dashboard with HR analytics charts for Jinjer HRM, and delivered AKAS Bank features for a Japanese bank in Volt MX Iris',
         'Integrated REST APIs and delivered in Agile/Scrum sprints with code review and Git workflows',
       ],
