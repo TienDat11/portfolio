@@ -134,7 +134,7 @@ export const portfolioData: PortfolioData = {
       title: 'Crosstechedu Apartment CRM & Real-Estate RAG',
       track: 'fullstack',
       description:
-        'Apartment-management CRM in Flutter Web and FastAPI with a Kanban pipeline, role-based access control, and automatic two-way Google Sheets API sync. The companion Next.js 15 real-estate consultation platform answers buyer questions with source-cited FastAPI RAG.',
+        'Apartment-management CRM in Flutter Web and FastAPI with a Kanban pipeline, role-based access control, and automatic two-way Google Sheets API sync. The companion Next.js 15 real-estate chatbot uses source-cited FastAPI RAG.',
       metric: '2-way Google Sheets sync',
       tech: ['Next.js 15', 'Flutter Web', 'FastAPI', 'PostgreSQL', 'Google Sheets API', 'RBAC', 'Docker'],
       highlights: [
@@ -355,15 +355,14 @@ export const portfolioData: PortfolioData = {
       id: 'conjob-mvp',
       title: 'ConJob MVP Social: Next.js Web App',
       track: 'fullstack',
-      description: 'MVP web app built with the Next.js App Router and TypeScript, deployed on Vercel.',
-      metric: 'Live on Vercel',
-      tech: ['Next.js', 'TypeScript', 'Vercel'],
-      highlights: ['Next.js App Router with TypeScript', 'Live demo deployed on Vercel'],
+      description: 'MVP web app built with the Next.js App Router and TypeScript.',
+      metric: 'Next.js App Router · TypeScript',
+      tech: ['Next.js', 'TypeScript'],
+      highlights: ['Next.js App Router with TypeScript', 'Repository on GitHub'],
       links: [
-        { label: 'Live demo', url: 'https://conjobmvp-social.vercel.app', kind: 'live' },
         { label: 'GitHub', url: 'https://github.com/TienDat11/ConJob_Mvp_Social', kind: 'github' },
       ],
-      preview: { kind: 'diagram', nodes: ['Next.js app', 'TypeScript', 'Vercel', 'Live demo'] },
+      preview: { kind: 'diagram', nodes: ['Next.js app', 'TypeScript', 'App Router', 'GitHub repo'] },
     },
     {
       id: 'happyco',
@@ -375,6 +374,86 @@ export const portfolioData: PortfolioData = {
       highlights: ['Clean Architecture layering', 'Testing and deployment sections in the repository README'],
       links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/HappyCo', kind: 'github' }],
       preview: { kind: 'diagram', nodes: ['Flutter UI', 'Domain layer', 'Data layer', 'Repositories'] },
+    },
+    {
+      id: 'huec-it-chatbot',
+      title: 'HueCIT Chatbot RAG: Software Support Assistant',
+      track: 'ai',
+      description:
+        'RAG chatbot for software-operation support. It answers how-to questions from internal documents and analyzes error screenshots to suggest fixes. Built by a team of two over eight weeks.',
+      metric: 'Team of 2 · 8 weeks',
+      tech: ['Python', 'RAG', 'Image analysis'],
+      highlights: [
+        'Document Q&A over internal user guides (RAG pipeline)',
+        'Error-screenshot recognition with fix guidance',
+        'Two-person team, eight-week build',
+      ],
+      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/huecit-chatbot-rag', kind: 'github' }],
+      preview: { kind: 'diagram', nodes: ['Document RAG', 'Error-screenshot analysis', 'Fix guidance', 'Python'] },
+    },
+    {
+      id: 'realestate-legal-rag',
+      title: 'Real-Estate Legal Document Search: RAG for Brokers',
+      track: 'ai',
+      description:
+        'RAG chatbot that helps real-estate brokers look up legal documents, planning records, project files and price policy before answering customers. The repository builds and typechecks; end-to-end runtime is not yet verified.',
+      metric: 'Builds and typechecks · runtime not yet verified',
+      tech: ['Python', 'Next.js', 'RAG', 'Eval harness'],
+      highlights: [
+        'Ingest, API and eval directories in one repository',
+        'Next.js frontend that builds and typechecks',
+        'Designed with citations, a 3-tier confidence level and an output guard',
+      ],
+      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/rag-real-estate', kind: 'github' }],
+      preview: { kind: 'diagram', nodes: ['Next.js frontend', 'Python API', 'Ingest pipeline', 'Eval harness'] },
+    },
+    {
+      id: 'omp-harness',
+      title: 'omp-harness-plugin: Guardrails and Memory for a Coding Agent',
+      track: 'ai',
+      description:
+        'Versioned, evidence-driven harness plugin for the omp coding agent. It adds deterministic tool policy and guardrails, a read-budget guard, session telemetry and per-project Zero-Mem memory, and adds no agent runtime of its own.',
+      metric: 'Tested on omp 18.12 to 18.17',
+      tech: ['TypeScript', 'Node.js', 'Zero-Mem'],
+      highlights: [
+        'Deterministic tool policy and guardrails',
+        'Read-budget guard and session telemetry',
+        'Gated learning from structured task outcomes',
+      ],
+      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/omp-harness-plugin', kind: 'github' }],
+      preview: { kind: 'diagram', nodes: ['omp agent', 'Tool policy', 'Telemetry', 'Zero-Mem memory'] },
+    },
+    {
+      id: 'maestro',
+      title: 'Maestro: Orchestration Harness for Claude Code',
+      track: 'ai',
+      description:
+        'Reusable orchestration harness for Claude Code that wraps ECC skills into guides and sensors. An Opus commander stays in the main session and hands execution to Sonnet and Haiku subagents, using a zero-dependency Node CLI for routing, state and memory.',
+      metric: 'Zero-dependency Node CLI',
+      tech: ['Claude Code', 'Node.js', 'Subagents'],
+      highlights: [
+        'Opus commander with Sonnet and Haiku subagents',
+        'Routing, sensors, state and memory in one CLI',
+        'Built on the ECC skill set',
+      ],
+      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/maestro', kind: 'github' }],
+      preview: { kind: 'diagram', nodes: ['Opus commander', 'Sonnet subagents', 'Haiku subagents', 'Node CLI'] },
+    },
+    {
+      id: 'consulting-site',
+      title: 'Corporate Website for a Consulting Firm',
+      track: 'fullstack',
+      description:
+        'Company website for a business consulting firm, built with the Next.js App Router and TypeScript. Service and process pages share one dynamic route, and the copy is kept in typed data files.',
+      metric: 'Next.js App Router · TypeScript',
+      tech: ['Next.js', 'TypeScript', 'App Router'],
+      highlights: [
+        'One dynamic route for six service pages and four process steps',
+        'Typed content data files',
+        'Copy taken from the client documents',
+      ],
+      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/ngochoangbhxh', kind: 'github' }],
+      preview: { kind: 'diagram', nodes: ['Next.js App Router', 'Typed content', 'Service pages', 'Process steps'] },
     },
   ],
   moreProjects: [
@@ -389,42 +468,6 @@ export const portfolioData: PortfolioData = {
       description:
         'Web and mobile client features for a Japanese bank client, built in Volt MX Iris during Rikkeisoft client work. No public repository.',
       tech: ['Volt MX Iris'],
-    },
-    {
-      name: 'HuecIT Chatbot RAG',
-      description:
-        'RAG chatbot for software-operation support that also analyses error screenshots and suggests fixes. Built by a team of two over eight weeks.',
-      tech: ['Python', 'RAG'],
-    },
-    {
-      name: 'Real-estate legal document search',
-      description:
-        'RAG assistant for real-estate legal and price search, built as a Crosstechedu project.',
-      tech: ['Python', 'Next.js', 'RAG'],
-    },
-    {
-      name: 'omp-harness-plugin',
-      description:
-        'Harness plugin for the omp coding agent that adds tool policy and guardrails, session telemetry and per-project memory.',
-      tech: ['TypeScript', 'Node.js'],
-    },
-    {
-      name: 'Maestro',
-      description:
-        'Orchestration skill and CLI for Claude Code that routes work between an Opus commander and Sonnet and Haiku subagents.',
-      tech: ['Claude Code', 'Node.js'],
-    },
-    {
-      name: 'Corporate website for a consulting firm',
-      description:
-        'Next.js App Router site for a business consulting client, with service pages built from the client content. Client work.',
-      tech: ['Next.js', 'TypeScript'],
-    },
-    {
-      name: 'Real-estate project business brief',
-      description:
-        'One-page business report and open-question list used to scope a property-advice chatbot. Client work.',
-      tech: ['HTML', 'Chatbot scoping'],
     },
     {
       name: 'Bootcamp and practice repositories (2023 to 2024)',
