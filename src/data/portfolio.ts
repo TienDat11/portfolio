@@ -439,22 +439,6 @@ export const portfolioData: PortfolioData = {
       links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/maestro', kind: 'github' }],
       preview: { kind: 'diagram', nodes: ['Opus commander', 'Sonnet subagents', 'Haiku subagents', 'Node CLI'] },
     },
-    {
-      id: 'consulting-site',
-      title: 'Corporate Website for a Consulting Firm',
-      track: 'fullstack',
-      description:
-        'Company website for a business consulting firm, built with the Next.js App Router and TypeScript. Service and process pages share one dynamic route, and the copy is kept in typed data files.',
-      metric: 'Next.js App Router · TypeScript',
-      tech: ['Next.js', 'TypeScript', 'App Router'],
-      highlights: [
-        'One dynamic route for six service pages and four process steps',
-        'Typed content data files',
-        'Copy taken from the client documents',
-      ],
-      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/ngochoangbhxh', kind: 'github' }],
-      preview: { kind: 'diagram', nodes: ['Next.js App Router', 'Typed content', 'Service pages', 'Process steps'] },
-    },
   ],
   moreProjects: [
     {
