@@ -47,6 +47,12 @@ export interface Project {
   preview: ProjectPreview
 }
 
+export interface MoreProject {
+  name: string
+  description: string
+  tech: string[]
+}
+
 export interface Experience {
   company: string
   role: string
@@ -73,6 +79,7 @@ export interface PortfolioData {
   showcase: ShowcaseAct[]
   skills: SkillCategory[]
   projects: Project[]
+  moreProjects: MoreProject[]
   experience: Experience[]
   education: Education[]
 }

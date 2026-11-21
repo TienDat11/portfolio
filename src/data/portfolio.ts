@@ -158,7 +158,7 @@ export const portfolioData: PortfolioData = {
         'Shot speed and trajectory analytics',
         'YOLOv8 player detection and a custom-trained YOLOv5 ball detector',
       ],
-      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/Tennis-Match-Analysis', kind: 'github' }],
+      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/tennis-analysis', kind: 'github' }],
       preview: {
         kind: 'terminal',
         lines: [
@@ -281,6 +281,156 @@ export const portfolioData: PortfolioData = {
       ],
       links: [],
       preview: { kind: 'diagram', nodes: ['Client', 'Nginx · TLS', 'Twake Mail (Docker)', 'GitHub Actions'] },
+    },
+    {
+      id: 'room-rental',
+      title: 'Room Rental Management: Landlord, Tenant and Admin Platform',
+      track: 'fullstack',
+      description:
+        'Rental management system with Admin, Landlord and Tenant roles and access control in the API. Django REST Framework backend, React frontend and PostgreSQL, with GitHub Actions and deployment on Render, Vercel and Neon.',
+      metric: 'Render · Vercel · Neon',
+      tech: ['Django', 'Django REST Framework', 'React', 'PostgreSQL', 'GitHub Actions', 'Render', 'Vercel', 'Neon'],
+      highlights: [
+        'Admin, Landlord and Tenant roles with access control in the API',
+        'GitHub Actions workflow in the repository',
+        'Deployed on Render, Vercel and Neon',
+      ],
+      links: [
+        { label: 'GitHub', url: 'https://github.com/TienDat11/room-rental-management-system', kind: 'github' },
+        { label: 'Live demo', url: 'https://room-rental-management-system-front.vercel.app', kind: 'live' },
+      ],
+      preview: {
+        kind: 'diagram',
+        nodes: ['React (Vercel)', 'Django REST API (Render)', 'PostgreSQL (Neon)', 'GitHub Actions'],
+      },
+    },
+    {
+      id: 'kintai',
+      title: 'Kintai: Attendance, Leave and Payroll System',
+      track: 'fullstack',
+      description:
+        'Full-stack HR system for attendance tracking, leave management and payroll processing, with role-based access control, audit logging and PDF reports. Spring Boot backend and Angular frontend.',
+      metric: 'Spring Boot + Angular',
+      tech: ['Java', 'Spring Boot', 'Angular', 'TypeScript', 'Google Sheets API', 'PDF export'],
+      highlights: [
+        'Attendance, leave and payroll workflows',
+        'Role-based access control with audit logging',
+        'PDF reports and Google Sheets integration',
+      ],
+      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/kintai', kind: 'github' }],
+      preview: {
+        kind: 'diagram',
+        nodes: ['Angular (TypeScript)', 'Spring Boot API', 'Attendance · Leave · Payroll', 'Google Sheets'],
+      },
+    },
+    {
+      id: 'bstories',
+      title: 'BStories: Flutter Mobile App',
+      track: 'mobile',
+      description:
+        'Flutter mobile app built with BLoC, using Socket.IO and Firebase Cloud Messaging for push notifications. Built from July to September 2025.',
+      metric: 'Flutter · BLoC · Socket.IO',
+      tech: ['Flutter', 'Dart', 'BLoC', 'Socket.IO', 'FCM'],
+      highlights: ['BLoC state management', 'Socket.IO integration', 'Firebase Cloud Messaging notifications'],
+      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/b-stories', kind: 'github' }],
+      preview: { kind: 'diagram', nodes: ['Flutter app', 'BLoC', 'Socket.IO', 'Firebase FCM'] },
+    },
+    {
+      id: 'atlas-hrm',
+      title: 'Atlas HRM Dashboard: Vue 3 Admin',
+      track: 'fullstack',
+      description:
+        'HR management dashboard built with Vue 3, the Composition API and strict TypeScript. Includes JWT authentication with route guards, a statistics dashboard with ApexCharts and Pinia state management.',
+      metric: 'Vue 3 · strict TypeScript',
+      tech: ['Vue 3', 'TypeScript', 'Vite', 'Pinia', 'Vue Router', 'Axios', 'ApexCharts'],
+      highlights: [
+        'JWT login, registration and route guards',
+        'Statistics dashboard with ApexCharts',
+        'Axios client with interceptors',
+      ],
+      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/atlas-hrm', kind: 'github' }],
+      preview: { kind: 'diagram', nodes: ['Vue 3 + Pinia', 'Axios · JWT', 'Router guards', 'ApexCharts'] },
+    },
+    {
+      id: 'conjob-mvp',
+      title: 'ConJob MVP Social: Next.js Web App',
+      track: 'fullstack',
+      description: 'MVP web app built with the Next.js App Router and TypeScript, deployed on Vercel.',
+      metric: 'Live on Vercel',
+      tech: ['Next.js', 'TypeScript', 'Vercel'],
+      highlights: ['Next.js App Router with TypeScript', 'Live demo deployed on Vercel'],
+      links: [
+        { label: 'Live demo', url: 'https://conjobmvp-social.vercel.app', kind: 'live' },
+        { label: 'GitHub', url: 'https://github.com/TienDat11/ConJob_Mvp_Social', kind: 'github' },
+      ],
+      preview: { kind: 'diagram', nodes: ['Next.js app', 'TypeScript', 'Vercel', 'Live demo'] },
+    },
+    {
+      id: 'happyco',
+      title: 'HappyCo: Flutter E-commerce App',
+      track: 'mobile',
+      description: 'E-commerce app built with Flutter following Clean Architecture principles.',
+      metric: 'Flutter · Clean Architecture',
+      tech: ['Flutter', 'Dart', 'Clean Architecture'],
+      highlights: ['Clean Architecture layering', 'Testing and deployment sections in the repository README'],
+      links: [{ label: 'GitHub', url: 'https://github.com/TienDat11/HappyCo', kind: 'github' }],
+      preview: { kind: 'diagram', nodes: ['Flutter UI', 'Domain layer', 'Data layer', 'Repositories'] },
+    },
+  ],
+  moreProjects: [
+    {
+      name: 'Jinjer HRM dashboards',
+      description:
+        'React dashboards with HR analytics charts, built with react-hook-form, Yup, Redux-Saga and Ant Design during Rikkeisoft client work. No public repository.',
+      tech: ['React', 'Redux-Saga', 'Ant Design'],
+    },
+    {
+      name: 'AKAS Bank client application',
+      description:
+        'Web and mobile client features for a Japanese bank client, built in Volt MX Iris during Rikkeisoft client work. No public repository.',
+      tech: ['Volt MX Iris'],
+    },
+    {
+      name: 'HuecIT Chatbot RAG',
+      description:
+        'RAG chatbot for software-operation support that also analyses error screenshots and suggests fixes. Built by a team of two over eight weeks.',
+      tech: ['Python', 'RAG'],
+    },
+    {
+      name: 'Real-estate legal document search',
+      description:
+        'RAG assistant for real-estate legal and price search, built as a Crosstechedu project.',
+      tech: ['Python', 'Next.js', 'RAG'],
+    },
+    {
+      name: 'omp-harness-plugin',
+      description:
+        'Harness plugin for the omp coding agent that adds tool policy and guardrails, session telemetry and per-project memory.',
+      tech: ['TypeScript', 'Node.js'],
+    },
+    {
+      name: 'Maestro',
+      description:
+        'Orchestration skill and CLI for Claude Code that routes work between an Opus commander and Sonnet and Haiku subagents.',
+      tech: ['Claude Code', 'Node.js'],
+    },
+    {
+      name: 'Corporate website for a consulting firm',
+      description:
+        'Next.js App Router site for a business consulting client, with service pages built from the client content. Client work.',
+      tech: ['Next.js', 'TypeScript'],
+    },
+    {
+      name: 'Real-estate project business brief',
+      description:
+        'One-page business report and open-question list used to scope a property-advice chatbot. Client work.',
+      tech: ['HTML', 'Chatbot scoping'],
+    },
+    {
+      name: 'Bootcamp and practice repositories (2023 to 2024)',
+      description:
+        'Coursework exercises in HTML, CSS, JavaScript, PHP and Laravel, including CRUD and front-end practice projects.',
+      tech: ['HTML', 'CSS', 'JavaScript', 'PHP', 'Laravel'],
     },
   ],
 

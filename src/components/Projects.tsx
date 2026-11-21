@@ -3,6 +3,7 @@ import { portfolioData } from '../data/portfolio'
 import type { ProjectTrack } from '../types'
 import ProjectCard from './ProjectCard'
 import ScrollSection from './ScrollSection'
+import MoreProjects from './MoreProjects'
 
 type TrackFilter = 'all' | ProjectTrack
 
@@ -54,6 +55,7 @@ export default function Projects() {
           </ScrollSection>
         ))}
       </div>
+      {filter === 'all' && <MoreProjects />}
     </section>
   )
 }
